@@ -1,0 +1,85 @@
+"""Synthetic contract/schema/lifecycle tests only; never physical acceptance."""
+from pathlib import Path
+from dataclasses import asdict,replace
+from datetime import datetime,timezone
+from types import SimpleNamespace
+import hashlib,json,sys,io
+import numpy as np
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));sys.dont_write_bytecode=True
+from release_material_contract import (MaterialContract,ReleaseState,SkinPatch,CommandSample,ActuatorAuthority,ReleaseLifecycle,ExitCandidate,COMMAND_AXES,COMMAND_UNITS,ROBOT_JOINT_NAMES,ALL_SKIN_SCOPE,bounded_uncertified_exit,check_uncertified_exit)
+from release_entry_model import ModeModelManifest,ReleaseEntryModel,EntryDomain,Artifact,validate_response_arrays
+H='a'*64 # Synthetic robot-only identity, never a calibrated model hash.
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def main():
+    checks={}
+    def check(k,v):checks[k]=bool(v)
+    def rejects(k,call):
+        try:call();check(k,False)
+        except (ValueError,TypeError,KeyError):check(k,True)
+    contract=MaterialContract('synthetic_force_profile','declared_capsule',(5.,)*5,18.,True)
+    names=tuple(sorted(ROBOT_JOINT_NAMES));command=(.5,)*18+(.1,0.,0.)
+    def state(now=12.,sample=None,pressure=(0.,)*5,aux=0.,valid=(True,)*5,aux_valid=True,patches=(),history=()):
+        sample=now if sample is None else sample
+        return ReleaseState(now,names,(0.,)*24,(0.,)*24,command,(0.,)*21,command,pressure,(0.,)*5,valid,(sample,)*5,aux,(0.,)*6 if aux_valid else None,aux_valid,sample,H,H,patches,history)
+    authority=ActuatorAuthority((-1.,)*18+(0.,-.5,-.7),(1.,)*18+(.1,.2,.5),(1.,)*18+(.02,.1,.1),(0.,)*18,H)
+    check('canonical21axes_and_units',len(COMMAND_AXES)==len(set(COMMAND_AXES))==21 and COMMAND_UNITS==('rad',)*18+('m','rad','rad'))
+    check('aux_unprotected_is_explicit_not_all_material_safety',contract.protected_scope=='all_external_instrumented_fingers_auxiliary_unprotected')
+    check('explicit_aux_cap_changes_protected_scope',replace(contract,auxiliary_cap_N=3.).protected_scope==ALL_SKIN_SCOPE)
+    rejects('unknown_true_mass_in_contract_rejected',lambda:MaterialContract.from_payload({**asdict(contract),'true_mass':.12}))
+    rejects('numeric_string_rejected',lambda:replace(contract,finger_budget_N='18'))
+    rejects('numpy_boolean_rejected_as_number',lambda:replace(contract,finger_budget_N=np.bool_(True)))
+    rejects('scene_field_in_state_rejected',lambda:ReleaseState.from_payload({**asdict(state()),'scenario':'nominal'}))
+    rejects('target_id_in_patch_rejected',lambda:ReleaseState.from_payload({**asdict(state()),'skin_patches':[dict(robot_link='rh_thdistal',link_position_m=[0,0,0],link_normal=[0,0,1],normal_N=1,sample_time_s=12,is_target=True)]}))
+    rejects('object_joint_coordinates_rejected',lambda:replace(state(),joint_names=('object_free',)))
+    rejects('future_skin_sample_rejected',lambda:state(sample=12.001))
+    rejects('future_actual_command_rejected',lambda:state(history=(CommandSample(12.01,command),)))
+    rejects('nonnormalized_patch_normal_not_silently_fixed',lambda:SkinPatch('rh_thdistal',(0,0,0),(0,0,2),1.,12.,0))
+    rejects('wrong21axis_order_rejected',lambda:replace(authority,axes=tuple(reversed(COMMAND_AXES))))
+    rejects('wrong_Nm_or_command_units_rejected',lambda:replace(authority,units=('N',)*21))
+    missing=ReleaseEntryModel();life=ReleaseLifecycle(contract);intent=life.request(12.);entry=missing.assess_entry(state(),contract,'unload')
+    check('release_immediately_cancels_holding_without_model',intent.release_active and not intent.holding_support_allowed and not entry.release_request_may_be_delayed and not entry.holding_support_may_be_requested)
+    check('missing_model_never_fabricates_pressure_or_kernel',entry.evidence_status=='missing' and not entry.pressure_prediction_available and missing.forecast_pressure()['kernel'] is None and missing.forecast_pressure()['upper_pressure_N'] is None)
+    candidate,guard=bounded_uncertified_exit(state(),authority,intent)
+    check('bounded_exit_has_exact21targets_and_fixed_motion',len(candidate.target)==21 and candidate.target[18:]==command[18:] and all(abs(x-y)<=.005+1e-12 for x,y in zip(candidate.target[:18],command[:18])))
+    check('mechanical_validity_is_never_material_certification',guard.mechanically_valid and not guard.material_certified and not guard.force_prediction_available)
+    rejects('no_exit_without_public_release_authority',lambda:ReleaseLifecycle(replace(contract,release_authorized=False)).request(12.))
+    unsafe=replace(candidate,target=(.51,)+candidate.target[1:]);check('reclosing_and_rate_violation_rejected',not check_uncertified_exit(unsafe,state(),authority,intent).mechanically_valid)
+    moving=replace(candidate,target=candidate.target[:18]+(.09995,0.,0.));check('unverified_downward_return_rejected',not check_uncertified_exit(moving,state(),authority,intent).mechanically_valid)
+    check('regrasp_flag_rejected',not check_uncertified_exit(replace(candidate,restarts_grasp=True),state(),authority,intent).mechanically_valid)
+    check('different_robot_authority_rejected',not check_uncertified_exit(candidate,replace(state(),robot_definition_sha256='b'*64),authority,intent).mechanically_valid)
+    life.observe(state(12.));life.observe(state(12.1));clear=life.observe(state(12.2))
+    check('clear_dwell_latches_opening',clear.opening_committed and abs(clear.first_clear_confirmation_s-12.2)<1e-9)
+    repeated=life.request(12.201);check('repeat_request_never_restarts_clearance_or_deadline',repeated.mode=='post_clear_monitor' and repeated.opening_committed and life.requested_at==12.)
+    unknown=life.observe(state(12.205,pressure=(None,)*5,aux=None,valid=(False,)*5,aux_valid=False));check('unknown_not_recontact_or_regrasp',unknown.recontact_count==0 and unknown.opening_committed and not unknown.holding_support_allowed and not unknown.observations_fresh)
+    touch=life.observe(state(12.21,pressure=(1.,0.,0.,0.,0.)));again=life.observe(state(12.215,pressure=(1.,0.,0.,0.,0.)))
+    check('known_recontact_monitored_once_without_reset',touch.mode=='recontact' and touch.recontact_count==again.recontact_count==1 and touch.opening_committed and touch.first_clear_confirmation_s==clear.first_clear_confirmation_s)
+    exit_after_clear,status=bounded_uncertified_exit(state(12.22),authority,touch);check('postclear_exit_cannot_restart_thumb_path',status.mechanically_valid and all(x<=y for x,y in zip(exit_after_clear.target[:18],command[:18])))
+    late=life.observe(state(16.));check('deadline_does_not_stop_monitor_or_hide_failure',late.deadline_exceeded and late.release_active and not late.holding_support_allowed)
+    duplicate=ReleaseLifecycle(replace(contract,maximum_sensor_age_s=1.));duplicate.request(12.);duplicate.observe(state(12.,sample=12.));dup=duplicate.observe(state(12.3,sample=12.));check('same_sample_cannot_accumulate_clear_dwell',not dup.opening_committed)
+    stale=ReleaseLifecycle(contract);stale.request(12.);stale.observe(state(12.,sample=12.));old=stale.observe(state(12.2,sample=12.));check('stale_clear_not_accepted',not old.observations_fresh and not old.opening_committed)
+    partial=ReleaseLifecycle(contract);partial.request(12.);s=state(12.,pressure=(6.,None,None,None,None),valid=(True,False,False,False,False),aux_valid=False,aux=None);known=partial.observe(s);check('partial_observation_can_latch_known_violation',known.violation_latched and known.observed_material_violation is True and not known.observations_fresh)
+    auxlife=ReleaseLifecycle(contract);auxlife.request(12.);auxlife.observe(state(12.,aux=1.));auxstatus=auxlife.observe(state(12.3,aux=1.));check('clearance_includes_aux_external_contact',not auxstatus.opening_committed)
+    manifest=ModeModelManifest('synthetic_missing','unload','declared_capsule',H,H)
+    check('missing_manifest_contains_no_measured_numbers',manifest.response_artifact is None and manifest.basis_artifact is None and manifest.entry_domain is None and manifest.validated_horizons_s==())
+    rejects('holding16x8_schema_is_not_release_model',lambda:replace(manifest,schema='public_contact_response_kernel_16x8_phase2_v1'))
+    rejects('cannot_announce_global_admission_in_json',lambda:replace(manifest,availability='model_admitted'))
+    rejects('missing_model_cannot_hide_placeholder_evidence',lambda:replace(manifest,validated_horizons_s=(.02,)))
+    rejects('reviewable_bundle_requires_real_response_and_validation',lambda:replace(manifest,availability='artifact_bundle_ready_for_review'))
+    rejects('metadata_truth_cannot_enter_model_schema',lambda:ModeModelManifest.from_payload({**manifest.as_payload(),'real_friction':.6}))
+    domain=EntryDomain(names,(-1.,)*24,(1.,)*24,(2.,)*24,(.1,)*21,(0.,)*6,(10.,)*6,0.,.12)
+    check('unvalidated_contact_geometry_explicitly_outside', 'contact_geometry_domain_missing' in domain.outside_reasons(state(),contract))
+    public_empty=replace(domain,allowed_contact_link_sets=((),));check('explicitly_measured_empty_contact_mode_membership',not public_empty.outside_reasons(state(),contract))
+    history_domain=replace(public_empty,minimum_actual_history_s=.01)
+    check('gapped_actual_history_not_imputed', 'missing_actual_command_history' in history_domain.outside_reasons(state(history=(CommandSample(11.99,command),CommandSample(12.,command))),contract))
+    complete_history=(CommandSample(11.99,command),CommandSample(11.995,command),CommandSample(12.,command))
+    check('actual5ms_history_complete_when_explicit',not history_domain.outside_reasons(state(history=complete_history),contract))
+    rejects('negative_velocity_domain_rejected',lambda:replace(domain,joint_velocity_abs_max_rad_s=(-1.,)*24))
+    bad=io.BytesIO();np.savez(bad,matrix_21_by_k=np.ones((21,1)),command_axes=np.array(COMMAND_AXES),command_units=np.array(('N',)*21),coefficient_units='dimensionless');bad.seek(0)
+    rejects('basis_units_checked_before_any_force_forecast',lambda:validate_response_arrays(io.BytesIO(),bad,manifest))
+    artifact=Artifact(str(ROOT/'release_material_contract.py'),'0'*64,'negative_identity_test');rejects('artifact_identity_not_trusted_from_status',lambda:artifact.verify(ROOT))
+    running=ROOT/'output/development_v6_1_physical_all16/manifest.json';identity=json.loads(running.read_text(encoding='utf-8'))['research_source_sha256']
+    check('new_modules_not_running96_dependencies','release_material_contract.py' not in identity and 'release_entry_model.py' not in identity)
+    check('running_frozen_sources_remain_exact',all(sha(ROOT/k)==v for k,v in identity.items()))
+    report=dict(schema='release_material_interface_synthetic_validation_v1',passed=all(checks.values()),checks=checks,failed=[k for k,v in checks.items() if not v],created_utc=datetime.now(timezone.utc).isoformat(),source_sha256={k:sha(ROOT/k) for k in ['release_material_contract.py','release_entry_model.py']},reviewer_sha256=sha(__file__),physics_steps_executed=0,model_kernel_collected=False,mode_pressure_prediction_implemented=False,material_safety_admitted=False,running_manifest_sha256=sha(running),scope='Synthetic unit/finite-authority/public-interface/schema tests only. Fixture numbers and identity are not physical calibration artifacts.')
+    out=ROOT/'review'/('release_material_interfaces_validation_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'.json');out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps(dict(passed=report['passed'],checks=len(checks),failed=report['failed'],path=str(out),sha256=sha(out)),ensure_ascii=False))
+if __name__=='__main__':main()

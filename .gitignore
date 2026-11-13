@@ -1,0 +1,46 @@
+# Local Python environments, caches and build files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Generated experiments, plots and replay exports; source/calibration stay tracked
+output/
+outputs/
+results/
+evidence/
+reports/
+*.npz
+*.npy
+*.mp4
+*.avi
+*.webm
+*.gif
+*_trace.csv
+*_timeseries.csv
+*.log
+server.pid
+server.process.json
+
+# Machine-local state and credentials
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak
+*.swp
+~$*

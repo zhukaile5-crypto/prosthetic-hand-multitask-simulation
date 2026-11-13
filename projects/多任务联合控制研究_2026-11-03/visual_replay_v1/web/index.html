@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>已运行结果回放</title>
+  <style>
+    :root{color-scheme:light;--ink:#172d34;--muted:#64777c;--line:#dce5e5;--paper:#fff;--bg:#f4f7f6;--accent:#137c73;--soft:#e8f4f0;--warning:#8a5c17;--warnbg:#fff5df;--danger:#9b4242;--errorbg:#fff0ee}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.5}button,select,input{font:inherit}button,select{min-height:40px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}button{padding:8px 16px;cursor:pointer;transition:background .15s}button:hover:not(:disabled){background:#edf4f2}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #8dc9bd;outline-offset:3px}select{width:100%;padding:8px 32px 8px 12px;cursor:pointer}label{display:block;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.02em;margin-bottom:6px}.shell{max-width:1580px;margin:auto;padding:28px 32px 30px}.top{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:24px}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.12em;margin:0 0 5px}h1{font-size:27px;letter-spacing:-.04em;margin:0;font-weight:700}.subtitle{color:var(--muted);margin:7px 0 0;font-size:13px}.replay-label{display:inline-flex;gap:7px;align-items:center;border:1px solid #cce3db;background:#edf7f2;color:#326558;padding:7px 12px;border-radius:30px;font-size:12px;white-space:nowrap}.replay-label:before{content:"";width:7px;height:7px;border-radius:50%;background:#438971}.filters{display:grid;grid-template-columns:1.3fr 1.1fr .85fr .85fr auto;gap:14px;align-items:end;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}.filters button{white-space:nowrap}.notice{padding:12px 15px;border:1px solid var(--line);border-radius:10px;margin-bottom:18px;background:#edf3f2;color:#466268;display:flex;align-items:center;gap:10px;min-height:46px}.notice[data-kind="ok"]{background:#eaf5f0;border-color:#cee6da;color:#326552}.notice[data-kind="pending"]{background:var(--warnbg);border-color:#eadcbc;color:var(--warning)}.notice[data-kind="error"]{background:var(--errorbg);border-color:#eed2cf;color:var(--danger)}.notice-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}.notice p{margin:0}.compare-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:22px 0 12px}.compare-head h2{font-size:17px;margin:0;letter-spacing:-.02em}.window-select{display:flex;gap:10px;align-items:center}.window-select label{margin:0;white-space:nowrap}.window-select select{width:210px;min-height:36px;padding-top:5px;padding-bottom:5px;font-size:12px}.comparison-scroll{overflow-x:auto;padding-bottom:4px}.cards{display:grid;grid-template-columns:repeat(3,minmax(270px,1fr));gap:16px;min-width:850px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 3px 12px #163c2e03}.card-head{padding:17px 19px 14px;display:flex;justify-content:space-between;align-items:center;border-top:3px solid var(--method-color)}.card h3{font-size:17px;margin:0;letter-spacing:.03em}.method-number{color:var(--muted);font-size:11px;letter-spacing:.05em}.card[data-method="fixed_effort"]{--method-color:#718391;--method-soft:#eff3f6}.card[data-method="ratio_effort"]{--method-color:#b18a4e;--method-soft:#f8f2e8}.card[data-method="fusion_effort"]{--method-color:#268d80;--method-soft:#eaf6f1}.image-box{position:relative;aspect-ratio:4/3;min-height:190px;background:#edf1f0;overflow:hidden;border-top:1px solid #e7edeb;border-bottom:1px solid #e4ebea}.image-box img{display:block;width:100%;height:100%;object-fit:contain;background:#eef2f1}.image-box img[hidden]{display:none}.image-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;color:#75868a;gap:11px;background:linear-gradient(145deg,#edf2ef,#f8faf9)}.image-placeholder[hidden]{display:none}.placeholder-symbol{font-size:28px;line-height:1;opacity:.5}.placeholder-main{font-size:13px;max-width:270px}.phase{position:absolute;bottom:10px;left:12px;padding:4px 9px;border:1px solid #ffffffb0;border-radius:20px;background:#fffffff0;color:#4a6267;font-size:11px}.card-body{padding:16px 19px 19px}.outcomes{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.badge{border-radius:6px;padding:4px 7px;font-size:11px;background:#f1f4f3;color:#758589}.badge[data-state="pass"]{background:#eaf5ef;color:#347354}.badge[data-state="fail"]{background:#fbede7;color:#a05b39}.quality{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:13px 0 16px;border-top:1px solid #edf1ef;border-bottom:1px solid #edf1ef}.metric-name{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}.metric-value{font-size:22px;font-variant-numeric:tabular-nums;letter-spacing:-.03em;font-weight:650}.metric-value small{font-size:11px;font-weight:400;color:var(--muted);letter-spacing:0;margin-left:4px}.metric-value.unavailable{font-size:16px;color:#899598;font-weight:400;letter-spacing:0}.force-title{display:flex;justify-content:space-between;align-items:baseline;margin:15px 0 10px}.force-title span{font-size:12px;color:var(--muted)}.force-total{font-size:16px!important;color:var(--ink)!important;font-weight:600;font-variant-numeric:tabular-nums}.fingers{display:grid;gap:8px}.finger{display:grid;grid-template-columns:40px 1fr 50px;align-items:center;gap:8px;font-size:11px;color:#677a80}.finger-track{height:6px;background:var(--method-soft);border-radius:4px;overflow:hidden}.finger-fill{display:block;height:100%;width:0;background:var(--method-color);border-radius:4px;transition:width .08s linear}.finger.unknown .finger-track{background:repeating-linear-gradient(90deg,#e5ebea 0 5px,#f6f8f7 5px 9px)}.finger-value{text-align:right;font-variant-numeric:tabular-nums}.player{margin-top:20px;border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:18px 20px}.player-top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:13px}.play-actions{display:flex;gap:8px;align-items:center}.play-button{background:var(--accent);border-color:var(--accent);color:#fff;min-width:92px;font-weight:600}.play-button:hover:not(:disabled){background:#106e65}.speed{padding:7px 10px;min-width:60px;color:var(--muted);text-align:center;font-size:12px}.time-label{font-size:19px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.time-label small{font-size:12px;font-weight:400;color:var(--muted)}.loaded-time{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}.timeline{width:100%;height:24px;margin:0;accent-color:var(--accent);cursor:pointer}.ticks{display:flex;justify-content:space-between;color:#8a999b;font-size:10px;font-variant-numeric:tabular-nums;margin-top:1px}.player-help{display:flex;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #eef1ef;color:var(--muted);font-size:11px}.footer{margin:18px 0 0;font-size:11px;color:#7c8c8f;display:flex;justify-content:space-between;gap:16px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:850px){.shell{padding:20px 16px}.top{align-items:flex-start}h1{font-size:23px}.filters{grid-template-columns:1fr 1fr;padding:14px;gap:12px}.filters button{align-self:end}.replay-label{display:none}.compare-head{align-items:flex-start}.window-select{display:block}.window-select label{margin-bottom:4px}.window-select select{width:185px}.footer,.player-help{flex-direction:column;gap:5px}.image-box{min-height:180px}.cards{gap:12px}.card-body{padding:14px 16px}.player{padding:16px}.time-label{font-size:17px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+    .cards{min-width:0;grid-template-columns:repeat(3,minmax(0,1fr))}.card{min-width:0}.quality{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-name{overflow-wrap:anywhere}
+    .card[data-method="fixed_effort"]{--method-color:#8B969D;--method-soft:#eff2f3}.card[data-method="ratio_effort"]{--method-color:#496F95;--method-soft:#edf2f8}.card[data-method="fusion_effort"]{--method-color:#B68A2F;--method-soft:#f8f2e3}
+    @media(max-width:680px){.cards{grid-template-columns:1fr}.comparison-scroll{overflow-x:visible}.image-box{min-height:0;max-height:340px}.top{flex-wrap:wrap}.compare-head{gap:12px}.window-select select{max-width:100%}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <div><p class="eyebrow">实验过程 · 同时刻比较</p><h1>已运行结果回放</h1><p class="subtitle">三种方法并排查看，共用时间与视角。</p></div>
+    <span id="record-label" class="replay-label">查看已保存记录</span>
+  </header>
+  <section class="filters" aria-label="选择回放结果">
+    <div><label for="scenario">环境</label><select id="scenario"><option value="nominal">常规环境</option><option value="friction_drop">摩擦变化</option><option value="fragile_conflict">受拉与挤压</option><option value="collision">障碍接触</option></select></div>
+    <div><label for="motion">运动任务</label><select id="motion"><option value="hold">原地持握</option><option value="transport">抬升与转腕</option></select></div>
+    <div><label for="seed">重复条件</label><select id="seed"><option value="617901">种子 A</option><option value="617902">种子 B</option></select></div>
+    <div><label for="view">画面视角</label><select id="view"><option value="front">正面</option><option value="side">侧面</option><option value="oblique">斜侧面</option></select></div>
+    <button id="refresh" type="button">更新结果</button>
+  </section>
+  <div id="notice" class="notice" data-kind="pending" role="status" aria-live="polite"><span class="notice-dot" aria-hidden="true"></span><p id="notice-text">正在读取已保存的结果列表…</p></div>
+  <div class="compare-head"><h2>三种方法</h2><div class="window-select"><label for="window">比较窗口</label><select id="window"><option value="static">静态 · 8.2–8.9 秒</option><option value="dynamic">事件/后段 · 9.3–11.7 秒</option><option value="holding">全持握 · 7.5–12 秒</option></select></div></div>
+  <div class="comparison-scroll"><section id="cards" class="cards" aria-label="三个方法的同步回放"></section></div>
+  <section class="player" aria-label="统一回放时间">
+    <div class="player-top"><div class="play-actions"><button id="play" class="play-button" type="button" disabled>▶ 播放</button><button id="restart" type="button" disabled>回到开始</button><span class="speed" aria-label="播放速度一倍">1×</span></div><div><div class="time-label"><span id="selected-time">0.00</span> <small>/ 16.00 秒</small></div><div id="loaded-time" class="loaded-time">画面尚未读取</div></div></div>
+    <label for="timeline" class="sr-only">回放时间，零至十六秒</label><input id="timeline" class="timeline" type="range" min="0" max="16" step="0.005" value="0" disabled>
+    <div class="ticks" aria-hidden="true"><span>0 秒</span><span>4 秒</span><span>8 秒</span><span>12 秒</span><span>16 秒</span></div>
+    <div class="player-help"><span id="bar-scale">指力条显示刻度：0–10 N</span><span>逐指TV按所选窗口比较；静态/后段取50Hz滤波，全持握取200Hz原记录。“不可评”不表示零。</span></div>
+  </section>
+  <footer class="footer"><span>任务与完整0–16秒力限分别展示，力限包含准备与释放。两个开发种子的结果不代表总体优势。</span><span>这里只回放已保存记录，不启动新的实验。</span></footer>
+</main>
+<script>
+(() => {
+  'use strict';
+  const METHODS = [
+    {key:'fixed_effort', name:'固定力', number:'方法 01'},
+    {key:'ratio_effort', name:'摩擦比', number:'方法 02'},
+    {key:'fusion_effort', name:'融合', number:'方法 03'}
+  ];
+  const FINGERS = ['拇指','食指','中指','无名指','小指'];
+  const $ = id => document.getElementById(id);
+  const state = {catalog:null,context:null,epoch:0,seek:0,time:0,playing:false,playStart:0,playTime:0,lastSchedule:0,
+    pending:null,busy:false,metadataController:null,frameReady:false,contextLoading:true,raf:null,duration:16};
+  const cards = new Map();
+  const finite = value => typeof value === 'number' && Number.isFinite(value);
+  const forceText = value => finite(value) ? value.toFixed(2) : '—';
+  const available = value => value && value.available === true;
+
+  function buildCards() {
+    for (const method of METHODS) {
+      const card = document.createElement('article');
+      card.className='card'; card.dataset.method=method.key;
+      card.innerHTML=`<div class="card-head"><h3>${method.name}</h3><span class="method-number">${method.number}</span></div>
+        <div class="image-box"><img alt="${method.name}方法的已保存过程画面" hidden><div class="image-placeholder"><span class="placeholder-symbol" aria-hidden="true">◷</span><span class="placeholder-main">等待读取画面</span></div><span class="phase">暂无画面</span></div>
+        <div class="card-body"><div class="outcomes"><span class="badge task">任务：不可评</span><span class="badge guard">力限：不可评</span></div>
+        <div class="quality"><div><span class="metric-name">平均总指力</span><span class="metric-value mean unavailable">不可评</span></div><div><span class="metric-name">逐指TV</span><span class="metric-value tv unavailable">不可评</span></div></div>
+        <div class="force-title"><span>当前总指力</span><span class="force-total">— N</span></div><div class="fingers">${FINGERS.map(name=>`<div class="finger unknown"><span>${name}</span><div class="finger-track"><i class="finger-fill"></i></div><span class="finger-value">— N</span></div>`).join('')}</div></div>`;
+      $('cards').append(card);
+      cards.set(method.key,{node:card,img:card.querySelector('img'),placeholder:card.querySelector('.image-placeholder'),placeholderText:card.querySelector('.placeholder-main'),
+        phase:card.querySelector('.phase'),task:card.querySelector('.task'),guard:card.querySelector('.guard'),mean:card.querySelector('.mean'),tv:card.querySelector('.tv'),
+        total:card.querySelector('.force-total'),fingers:[...card.querySelectorAll('.finger')],url:null});
+      card.querySelector('img').addEventListener('error',()=>{
+        if(card.querySelector('img').hidden)return;
+        placeholder(method.key,'画面未能正常显示，请重新读取。');state.frameReady=false;pause();
+        notice('画面显示失败，回放已暂停。请点击“更新结果”重试。','error');
+      });
+    }
+  }
+  function notice(text,kind='pending') { $('notice-text').textContent=text; $('notice').dataset.kind=kind; }
+  function controls() {
+    const methods=state.context?.methods || {};
+    const all=METHODS.every(m=>available(methods[m.key]));
+    $('play').disabled=state.contextLoading || !all || !state.frameReady;
+    const any=METHODS.some(m=>available(methods[m.key]));
+    $('timeline').disabled=state.contextLoading || !any;
+    $('restart').disabled=state.contextLoading || !any;
+    $('play').textContent=state.playing ? 'Ⅱ 暂停' : '▶ 播放';
+    $('play').setAttribute('aria-pressed',String(state.playing));
+  }
+  function pause() { state.playing=false; if(state.raf!==null) cancelAnimationFrame(state.raf); state.raf=null; controls(); }
+  function setTime(value) { state.time=Math.min(16,Math.max(0,value)); $('timeline').value=String(state.time); $('selected-time').textContent=state.time.toFixed(2); }
+  function selection() { return {scenario:$('scenario').value,motion:$('motion').value,seed:$('seed').value}; }
+  function query(params) { return new URLSearchParams(params).toString(); }
+  function normalizeMethods(value) {
+    if (!Array.isArray(value)) return value && typeof value==='object' ? value : {};
+    return Object.fromEntries(value.map(m=>[m.method || m.key || m.name,m]));
+  }
+  function sameContext(context,params) { return context.scenario===params.scenario && context.motion===params.motion && String(context.seed)===String(params.seed); }
+  function phaseLabel(phase) {
+    const names={CLOSING:'建立抓握',ACQUIRE:'建立抓握',CONTACT_ESTABLISHMENT:'建立接触',LIFT:'抬升',LIFTING:'抬升',HOLDING:'持握',RELEASE:'释放',RELEASING:'释放',MONITOR:'释放后观察',FINISHED:'记录结束',COMPLETE:'记录结束'};
+    return names[String(phase || '').toUpperCase()] || '过程记录';
+  }
+  function methodReason(method) {
+    const status=String(method?.status || '').toLowerCase();
+    return ['failed','error','runtime_failed','unreadable'].includes(status)
+      ? '这条结果暂不能读取，无法回放。' : '结果尚未就绪，暂不可回放。';
+  }
+  function placeholder(key,text) {
+    const c=cards.get(key);c.img.hidden=true;c.placeholder.hidden=false;c.placeholderText.textContent=text;c.phase.textContent='暂无画面';
+    if(c.url){URL.revokeObjectURL(c.url);c.url=null;c.img.removeAttribute('src');}
+  }
+  function resetCurrent() {
+    for(const {key} of METHODS) {
+      const c=cards.get(key);c.total.textContent='— N';c.phase.textContent='暂无画面';
+      for(const f of c.fingers){f.classList.add('unknown');f.querySelector('.finger-fill').style.width='0%';f.querySelector('.finger-value').textContent='— N';}
+    }
+    $('loaded-time').textContent='画面尚未读取';
+  }
+  function badge(node,label,value) {
+    node.textContent=label+'：'+(value===true ? (label==='任务'?'完成':'通过') : value===false ? (label==='任务'?'未完成':'未通过') : '不可评');
+    node.dataset.state=value===true?'pass':value===false?'fail':'unknown';
+  }
+  function metric(node,value,unit,eligible) {
+    const known=eligible===true && finite(value);node.classList.toggle('unavailable',!known);
+    node.replaceChildren(document.createTextNode(known?value.toFixed(2):'不可评'));
+    if(known){const small=document.createElement('small');small.textContent=unit;node.append(small);}
+  }
+  function updateMetrics() {
+    for(const {key} of METHODS) {
+      const c=cards.get(key),m=state.context?.methods?.[key],metrics=m?.metrics || {},w=metrics[$('window').value] || {};
+      badge(c.task,'任务',available(m)?metrics.full_task:null);badge(c.guard,'力限',available(m)?metrics.force_guard:null);
+      metric(c.mean,w.mean_N,'N',available(m)&&w.eligible);metric(c.tv,w.tv_N_per_s,'N/s',available(m)&&w.eligible);
+      c.tv.parentElement.querySelector('.metric-name').textContent=w.tv_label || '逐指TV';
+      c.guard.title='完整0–16秒原力限评价，包含共同准备、持握和释放。';
+    }
+  }
+  async function jsonRequest(url,signal) {
+    const response=await fetch(url,{cache:'no-store',signal,headers:{Accept:'application/json'}});
+    if(!response.ok){const e=new Error('结果暂不可读取');e.status=response.status;throw e;}
+    return response.json();
+  }
+  async function timedJson(url) {
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
+    try{return await jsonRequest(url,controller.signal);}finally{clearTimeout(timer);}
+  }
+  async function frameRequest(job,method) {
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),45000);
+    try {
+      const response=await fetch('/api/frame?'+query({...job.params,method,time:job.time.toFixed(3),view:job.view}),{cache:'no-store',signal:controller.signal});
+      if(!response.ok){const e=new Error('画面暂不可用');e.status=response.status;throw e;}
+      const blob=await response.blob();
+      if(!blob.type.startsWith('image/')) throw new Error('没有读取到回放画面');
+      return blob;
+    } finally { clearTimeout(timer); }
+  }
+  function scheduleRender() {
+    if(!state.context || state.contextLoading) return;
+    state.pending={params:selection(),time:state.time,view:$('view').value,epoch:state.epoch,seek:state.seek,
+      methods:METHODS.filter(m=>available(state.context.methods[m.key])).map(m=>m.key)};
+    void pump();
+  }
+  async function pump() {
+    if(state.busy) return;
+    state.busy=true;
+    try {
+      // One batch is in flight. New ticks overwrite one pending target; no queue.
+      while(state.pending){const job=state.pending;state.pending=null;await renderBatch(job);}
+    } finally {state.busy=false;}
+  }
+  async function renderBatch(job) {
+    if(job.epoch!==state.epoch || job.seek!==state.seek || !job.methods.length) return;
+    const requests=[timedJson('/api/sample?'+query({...job.params,time:job.time.toFixed(3)})),...job.methods.map(m=>frameRequest(job,m))];
+    const values=await Promise.allSettled(requests);
+    // A context/view change or user seek invalidates all previous replies.
+    if(job.epoch!==state.epoch || job.seek!==state.seek) return;
+    const sample=values[0].status==='fulfilled' ? values[0].value : null;
+    const samples=normalizeMethods(sample?.methods);
+    let failure=false,waiting=false;
+    const forces=[];
+    for(const key of job.methods){const a=samples[key]?.finger_force_N;if(available(samples[key])&&Array.isArray(a))for(const f of a)if(finite(f)&&f>=0)forces.push(f);}
+    const scale=Math.max(10,Math.ceil(Math.max(0,...forces)/5)*5);
+    $('bar-scale').textContent=`指力条显示刻度：0–${scale} N`;
+    job.methods.forEach((key,index)=>{
+      const c=cards.get(key),image=values[index+1],data=samples[key];
+      if(image.status==='fulfilled') {
+        const next=URL.createObjectURL(image.value),previous=c.url;c.url=next;c.img.src=next;c.img.hidden=false;c.placeholder.hidden=true;
+        if(previous) URL.revokeObjectURL(previous);
+      } else {
+        const status=image.reason?.status;waiting ||= [409,425,503].includes(status);
+        placeholder(key,[409,425,503].includes(status)?'这幅画面还未就绪，请稍后更新。':'画面读取失败，请重新读取。');failure=true;
+      }
+      const good=available(data)&&Array.isArray(data.finger_force_N)&&data.finger_force_N.length===5&&data.finger_force_N.every(f=>finite(f)&&f>=0)&&finite(data.total_force_N);
+      if(!good) failure=true;
+      c.total.textContent=good?forceText(data.total_force_N)+' N':'— N';
+      if(image.status==='fulfilled')c.phase.textContent=good?phaseLabel(data.phase):'当前数值不可用';
+      c.fingers.forEach((f,i)=>{
+        const value=good?data.finger_force_N[i]:null;f.classList.toggle('unknown',!finite(value));
+        f.querySelector('.finger-fill').style.width=finite(value)?Math.min(100,100*value/scale)+'%':'0%';
+        f.querySelector('.finger-value').textContent=forceText(value)+' N';
+      });
+    });
+    const clock=sample&&finite(sample.time_s)?sample.time_s:job.time;
+    $('loaded-time').textContent=sample?`已显示：${clock.toFixed(3)} 秒`:'当前数值读取失败';
+    state.frameReady=!failure && job.methods.length===3;
+    if(failure){pause();state.pending=null;notice(waiting?'画面尚未就绪，回放已暂停。可稍后点击“更新结果”。':'部分画面或数值读取失败，回放已暂停。请点击“更新结果”重试。',waiting?'pending':'error');}
+    else if(job.methods.length<3){pause();notice(`这组仅有 ${job.methods.length}/3 种方法的记录，暂不能同步播放。`,'pending');}
+    else notice(state.playing?'播放中。三列读取同一个时刻的保存记录。':'已读取这组结果。拖动时间条，或点击播放。','ok');
+    controls();
+  }
+  async function loadContext(resetTime=true) {
+    pause();state.epoch++;state.seek++;const epoch=state.epoch;
+    state.pending=null;state.context=null;state.frameReady=false;state.contextLoading=true;
+    if(state.metadataController) state.metadataController.abort();
+    const controller=new AbortController();state.metadataController=controller;
+    if(resetTime)setTime(0);resetCurrent();
+    for(const {key} of METHODS)placeholder(key,'正在读取这组保存记录…');
+    updateMetrics();controls();
+    const params=selection();
+    const known=state.catalog?.contexts?.some(c=>sameContext(c,params));
+    if(!known){
+      state.contextLoading=false;for(const {key} of METHODS)placeholder(key,'这组结果尚未就绪。');
+      notice('还没有这组可回放的结果。可以更换条件，或稍后更新。','pending');controls();return;
+    }
+    notice('正在读取所选条件的结果…','pending');
+    const timer=setTimeout(()=>controller.abort(),20000);
+    try {
+      const data=await jsonRequest('/api/context?'+query(params),controller.signal);
+      if(epoch!==state.epoch)return;
+      if(!data || !data.methods)throw new Error('结果信息不完整');
+      data.methods=normalizeMethods(data.methods);state.context=data;state.contextLoading=false;
+      // The registered viewer is fixed to the complete0..16s record.
+      if(data.duration_s!==undefined && (!finite(data.duration_s)||Math.abs(data.duration_s-16)>1e-6))throw new Error('完整回放时长不符');
+      updateMetrics();
+      let count=0;
+      for(const {key} of METHODS){const m=data.methods[key];if(available(m)){count++;placeholder(key,'正在读取所选时刻的画面…');}else{placeholder(key,methodReason(m));}}
+      controls();
+      if(!count){notice('这组结果尚未就绪，暂不能播放。','pending');return;}
+      notice(count===3?'正在同步读取三种方法的画面…':`这组仅有 ${count}/3 种方法的记录，缺失方法会保留为空。`,'pending');
+      scheduleRender();
+    } catch(error) {
+      if(epoch!==state.epoch)return;
+      state.context=null;state.contextLoading=false;state.frameReady=false;updateMetrics();resetCurrent();
+      for(const {key} of METHODS)placeholder(key,'结果暂不可读取，请稍后更新。');
+      notice('结果信息读取失败，未开始回放。请点击“更新结果”重试。','error');controls();
+    } finally {clearTimeout(timer);}
+  }
+  async function refreshCatalog() {
+    pause();$('refresh').disabled=true;notice('正在更新已保存结果的列表…','pending');
+    try {
+      const data=await timedJson('/api/catalog');
+      if(!data || !Array.isArray(data.contexts))throw new Error('结果列表不完整');
+      state.catalog=data;
+      const phase=String(typeof data.phase==='string'?data.phase:data.phase?.status || '').toLowerCase();
+      $('record-label').textContent=['pending','running','partial','in_progress','preparing'].includes(phase)?'部分记录待完成':phase==='development'?'开发阶段记录':'查看已保存记录';
+      await loadContext(false);
+    } catch(error) {
+      state.epoch++;state.pending=null;state.context=null;state.contextLoading=false;state.frameReady=false;
+      for(const {key} of METHODS)placeholder(key,'没有读取到结果列表。');resetCurrent();updateMetrics();controls();
+      notice('未能连接到回放记录。没有启动回放，请稍后重试。','error');
+    } finally {$('refresh').disabled=false;}
+  }
+  function animate(now) {
+    if(!state.playing)return;
+    const target=Math.min(16,state.playTime+(now-state.playStart)/1000);setTime(target);
+    if(now-state.lastSchedule>=100 || target>=16){state.lastSchedule=now;scheduleRender();}
+    if(target>=16){pause();return;}
+    state.raf=requestAnimationFrame(animate);
+  }
+  $('play').addEventListener('click',()=>{
+    if(state.playing){pause();state.seek++;scheduleRender();return;}
+    if(!state.frameReady)return;
+    if(state.time>=16)setTime(0);
+    state.playing=true;state.playTime=state.time;state.playStart=performance.now();state.lastSchedule=0;controls();state.raf=requestAnimationFrame(animate);
+  });
+  $('timeline').addEventListener('input',()=>{pause();state.seek++;setTime(Number($('timeline').value));scheduleRender();});
+  $('restart').addEventListener('click',()=>{pause();state.seek++;setTime(0);scheduleRender();});
+  for(const id of ['scenario','motion','seed'])$(id).addEventListener('change',()=>void loadContext(true));
+  $('view').addEventListener('change',()=>{
+    pause();state.epoch++;state.frameReady=false;
+    for(const {key} of METHODS)if(available(state.context?.methods?.[key]))placeholder(key,'正在读取新的视角…');
+    notice('正在读取所选视角…','pending');controls();scheduleRender();
+  });
+  $('window').addEventListener('change',updateMetrics);
+  $('refresh').addEventListener('click',()=>void refreshCatalog());
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
+  window.addEventListener('pagehide',()=>{pause();for(const c of cards.values())if(c.url)URL.revokeObjectURL(c.url);});
+  buildCards();void refreshCatalog();
+})();
+</script>
+</body>
+</html>

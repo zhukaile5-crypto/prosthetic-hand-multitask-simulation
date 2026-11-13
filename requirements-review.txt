@@ -1,0 +1,6 @@
+# Optional: independent numerical cross-checks in selected review scripts.
+# SciPy is not needed by the documented web-demo and macro-policy entry points.
+# Archived v22/v23 solvers also use SciPy, but require additional environment
+# migration: installing this file alone does not satisfy their historical pins.
+-r requirements.txt
+scipy>=1.15,<2

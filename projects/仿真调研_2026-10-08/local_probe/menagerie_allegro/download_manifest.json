@@ -1,0 +1,139 @@
+{
+  "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+  "repository": "google-deepmind/mujoco_menagerie",
+  "model": "wonik_allegro",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 148,
+      "sha256": "78268d42097269a81d5a84d7b4c45ce775c74454165288816cc8409a858935ac",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/CHANGELOG.md"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1289,
+      "sha256": "09c187439ecece8b00330e71eb988d3d30f29373c580dc31ab54200d0aa4deb4",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/LICENSE"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1543,
+      "sha256": "10d8795ad8682bdab403aab8fb7b5d4c051b68e025accfe58ebf0d440188665b",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/README.md"
+    },
+    {
+      "path": "allegro_hand.png",
+      "bytes": 1038406,
+      "sha256": "c23b303879ca9db0a1e4291d7e5b41dac2a0cb4140f679cb0f7ed03f66c91906",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/allegro_hand.png"
+    },
+    {
+      "path": "assets\\base_link.stl",
+      "bytes": 163884,
+      "sha256": "4060e1ae52bca21367e15a1dfab16bc7c2e81849566631b7f55e2cf376b7bc85",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/base_link.stl"
+    },
+    {
+      "path": "assets\\base_link_left.stl",
+      "bytes": 433984,
+      "sha256": "9f66c1cb8d27b9f07e49101a7997a49c60d3cc3ccbc8de96065322df68f47a0b",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/base_link_left.stl"
+    },
+    {
+      "path": "assets\\link_0.0.stl",
+      "bytes": 57584,
+      "sha256": "32b90a6744d472a6ffaee02cbf32eb8a5600b1da0944e86aeb9f53503a9f8ac9",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_0.0.stl"
+    },
+    {
+      "path": "assets\\link_1.0.stl",
+      "bytes": 70084,
+      "sha256": "e3dfb35b6682f62f18ca6ed0b39cb94ff627b68e0e3373cf7212390574604680",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_1.0.stl"
+    },
+    {
+      "path": "assets\\link_12.0_left.stl",
+      "bytes": 217084,
+      "sha256": "1749ba567bf36729a81eaecf384bc4f5483be8c496af54d230500b96f1d81dcc",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_12.0_left.stl"
+    },
+    {
+      "path": "assets\\link_12.0_right.stl",
+      "bytes": 204284,
+      "sha256": "c5418fc127311eefee1d8ee69dfcfde2157d038286900bee91608d2701b00f13",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_12.0_right.stl"
+    },
+    {
+      "path": "assets\\link_13.0.stl",
+      "bytes": 22484,
+      "sha256": "e906896afc078a12c9c377e3a2b07f375583d3b869581f9962030cabc888be29",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_13.0.stl"
+    },
+    {
+      "path": "assets\\link_14.0.stl",
+      "bytes": 46884,
+      "sha256": "a9e4983e4bff7fc7d868b4965c9865edb2669b946434095703766202b5de01ff",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_14.0.stl"
+    },
+    {
+      "path": "assets\\link_15.0.stl",
+      "bytes": 43284,
+      "sha256": "bf963adb775b79b27649f4f5dff4ced58ef676ce86cc677de49d3810382d11e0",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_15.0.stl"
+    },
+    {
+      "path": "assets\\link_15.0_tip.stl",
+      "bytes": 71984,
+      "sha256": "a7147c765d4b6d2eb16fa14bba2e8eceec4a750bc346260893ca02aca1fd7a63",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_15.0_tip.stl"
+    },
+    {
+      "path": "assets\\link_2.0.stl",
+      "bytes": 52884,
+      "sha256": "9c98477c65b45f5a3de1df0e1b54281da2385f4eafd057d103ab40893771c2d0",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_2.0.stl"
+    },
+    {
+      "path": "assets\\link_3.0.stl",
+      "bytes": 18084,
+      "sha256": "fe333088176395aa7d8a913aa953d3cd649c4c77753224239b78b2c99e3e314c",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_3.0.stl"
+    },
+    {
+      "path": "assets\\link_3.0_tip.stl",
+      "bytes": 71984,
+      "sha256": "9c3fa04fea0dfa1257c8a1b02d2b7d982b0d985c1ddda1edf148827944835f39",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_3.0_tip.stl"
+    },
+    {
+      "path": "assets\\link_4.0.stl",
+      "bytes": 22884,
+      "sha256": "f80ac4d443169c56507afaa0b3c72ec3679312bc80cbaebd03e73e96dd18c408",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/assets/link_4.0.stl"
+    },
+    {
+      "path": "left_hand.xml",
+      "bytes": 9932,
+      "sha256": "4c604119947fc7f055247541effdb937e1648e92e17b16512a1593e1c37ef787",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/left_hand.xml"
+    },
+    {
+      "path": "right_hand.xml",
+      "bytes": 9983,
+      "sha256": "cec3efe34be49c8220c23afdae0cfacbce10164a5bc7c34075b6668ee0a862a6",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/right_hand.xml"
+    },
+    {
+      "path": "scene_left.xml",
+      "bytes": 1035,
+      "sha256": "032b28250a7d6fb27378d2de18c271666aa150fd9b58a869fb28443333a9b3b8",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/scene_left.xml"
+    },
+    {
+      "path": "scene_right.xml",
+      "bytes": 1037,
+      "sha256": "20bbff25303c67625d2052fc377cffa48c14a0785b028c023e16df89d96ca491",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/0059d4335f8156206f63a35662313385f7ad6d74/wonik_allegro/scene_right.xml"
+    }
+  ]
+}

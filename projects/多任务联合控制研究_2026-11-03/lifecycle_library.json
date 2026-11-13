@@ -1,0 +1,16 @@
+{
+  "schema": "nominal_public_release_library_v1",
+  "provenance_kind": "selected_runtime_primitives_only",
+  "historical_validation_evidence_included": false,
+  "contexts": {
+    "capsule": {
+      "selected": "contact_clearance"
+    },
+    "box": {
+      "selected": "legacy_mechanical"
+    },
+    "sphere": {
+      "selected": "contact_clearance"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "controllers": {
+    "fixed": {
+      "base": 2.0,
+      "baseline_tracking_gain": 0.25
+    },
+    "ratio": {
+      "base": 2.0,
+      "ratio_floor": 1.8,
+      "ratio_kp": 0.8,
+      "ratio_ki": 0.2,
+      "slip_boost_rate": 3.0,
+      "baseline_tracking_gain": 0.25
+    },
+    "independent": {
+      "base": 1.2,
+      "slip_boost_rate": 4.0,
+      "baseline_tracking_gain": 0.15
+    },
+    "unified": {
+      "base": 1.6,
+      "force_cost": 0.04,
+      "reference_continuity": 3.0,
+      "force_continuity": 1.3,
+      "action_continuity": 0.5,
+      "support_reserve_fraction": 0.5
+    },
+    "unified_no_continuity": {
+      "base": 1.6,
+      "force_cost": 0.04,
+      "reference_continuity": 3.0,
+      "force_continuity": 1.3,
+      "action_continuity": 0.5,
+      "support_reserve_fraction": 0.5
+    },
+    "unified_no_geometry": {
+      "base": 1.6,
+      "force_cost": 0.04,
+      "reference_continuity": 3.0,
+      "force_continuity": 1.3,
+      "action_continuity": 0.5,
+      "support_reserve_fraction": 0.5
+    },
+    "unified_fixed_stage": {
+      "base": 1.6,
+      "force_cost": 0.04,
+      "reference_continuity": 3.0,
+      "force_continuity": 1.3,
+      "action_continuity": 0.5,
+      "support_reserve_fraction": 0.5
+    }
+  },
+  "references": {
+    "cylinder": {
+      "relative_offset": [
+        -1.9020503229501835e-06,
+        -3.0386156824770218e-06,
+        -1.718028348865016e-05
+      ],
+      "valid_seed_count": 3,
+      "window": [
+        8.2,
+        8.9
+      ],
+      "seeds": [
+        410001,
+        410002,
+        410003
+      ],
+      "physics_sha256": "ee5d35f14bb36c88971d12df64c282cd35b1879d1e3a3a0eb5d39a3cea75d533"
+    },
+    "box": {
+      "relative_offset": [
+        4.567035193155267e-08,
+        2.990619133367693e-08,
+        -1.9274164965479792e-05
+      ],
+      "valid_seed_count": 3,
+      "window": [
+        8.2,
+        8.9
+      ],
+      "seeds": [
+        410001,
+        410003,
+        410002
+      ],
+      "physics_sha256": "ee5d35f14bb36c88971d12df64c282cd35b1879d1e3a3a0eb5d39a3cea75d533"
+    },
+    "sphere": {
+      "relative_offset": [
+        -2.456408209198891e-07,
+        -5.582990995021008e-07,
+        -8.20058377440682e-05
+      ],
+      "valid_seed_count": 3,
+      "window": [
+        8.2,
+        8.9
+      ],
+      "seeds": [
+        410001,
+        410002,
+        410003
+      ],
+      "physics_sha256": "ee5d35f14bb36c88971d12df64c282cd35b1879d1e3a3a0eb5d39a3cea75d533"
+    }
+  },
+  "evaluation": {
+    "stable_dwell": 0.2,
+    "establishment_dwell": 0.1,
+    "release_dwell": 0.2,
+    "linear_speed_max": 0.005,
+    "angular_speed_max": 0.15,
+    "relative_error_max": 0.005,
+    "orientation_error_max": 0.08726646259971647,
+    "contact_min": 0.2,
+    "minimum_contacts": 3,
+    "required_fingers": [
+      0
+    ],
+    "table_support_max": 0.05,
+    "lift_tolerance": 0.005,
+    "force_tolerance": 0.02,
+    "release_force_max": 0.2,
+    "static_window": [
+      8.2,
+      8.9
+    ],
+    "static_contact_fraction_min": 1.0,
+    "static_coverage_min": 0.999,
+    "first_stability_horizon": 8.9,
+    "establishment_deadline": 8.0,
+    "release_deadline": 3.5,
+    "cv_mean_min": 0.2,
+    "hand_motion_tolerance": 0.01,
+    "support_loss_dwell": 0.1,
+    "force_bandwidth_hz": 50.0,
+    "force_filter_span": 0.05,
+    "evaluation_sample_interval": 0.005,
+    "require_full_substeps": true,
+    "require_skin_force": true,
+    "require_all_hand_release": true,
+    "wrist_motion_tolerance": 0.035,
+    "transport_loss_dwell": 0.3,
+    "static_window_sensitivity": [
+      8.3,
+      8.8
+    ]
+  },
+  "benchmark_id": "mujoco_finite_mass_five_compliant_contacts_v1",
+  "scope": "Finite-mass five compliant contacts with freely moving rigid object; not complete Shadow or prosthesis dynamics."
+}

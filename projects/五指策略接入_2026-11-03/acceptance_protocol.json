@@ -1,0 +1,163 @@
+{
+  "schema": "shadow-hand-integration-acceptance-v1",
+  "status": "predeclared-before-new-algorithm-performance-data",
+  "benchmark_id": "shadow_hand_strategy_integration_v1",
+  "purpose": "Establish faithful observation/execution migration and a credible matched comparison; no presumed performance advantage.",
+  "protected_history": {
+    "legacy_demo": "../五指假肢抓握仿真",
+    "five_pad_benchmark": "../统一人工反射重构",
+    "immutable_inventory": "review/preservation_before.json",
+    "requirements": [
+      "Write only in this independent integration directory.",
+      "Do not import old project modules in a way that writes old bytecode or logs.",
+      "Compare original SHA256/byte counts against the bootstrap inventory before delivery.",
+      "The old 2240 formal trials remain a separate model/experiment; never merge with Shadow results.",
+      "Preserve failed development probes in separate uniquely named evidence directories."
+    ]
+  },
+  "phase_order": [
+    "isolated_assets_and_preservation_inventory",
+    "observation_and_actuation_contracts",
+    "common_physical_foundation_acceptance",
+    "current_ratio_and_unified_migration",
+    "interactive_and_headless_equivalence",
+    "matched_development_then_new_confirmation_and_comprehensive_readout"
+  ],
+  "physical_foundation": {
+    "probe_is_not_an_algorithm_comparison": true,
+    "shared_probe_reference_N": [3.0, 1.8, 1.8, 1.8, 1.8],
+    "target_lift_m": 0.1,
+    "duration_s": 14.0,
+    "release_command_s": 10.0,
+    "static_window_s": [8.2, 8.9],
+    "shapes": ["capsule", "box", "sphere"],
+    "contact_time_constants_s": [0.02, 0.03],
+    "physical_timesteps_s": [0.001, 0.0005],
+    "matrix_size": 12,
+    "gates": {
+      "free_object": "A genuine six-DOF object, no weld/equality or scripted position attachment used to hold it.",
+      "finite_actuation": "All joint/tendon/lift actuators finite and original physical force signals never clipped.",
+      "numerical_warnings_max": 0,
+      "max_hand_object_penetration_m": 0.002,
+      "lift_error_max_m": 0.01,
+      "minimum_object_lift_from_initial_m": 0.07,
+      "minimum_supported_digits": 3,
+      "required_digit": 0,
+      "digit_contact_min_N": 0.2,
+      "table_support_max_N": 0.05,
+      "static_support_coverage_min": 1.0,
+      "release_command_requires_prior_support": true,
+      "release_all_hand_object_force_max_N": 0.2,
+      "release_dwell_s": 0.2,
+      "release_deadline_s": 3.5,
+      "step_halving_same_task_outcome": true,
+      "step_halving_static_mean_force_relative_difference_max": 0.1,
+      "step_halving_peak_force_relative_difference_max": 0.15
+    },
+    "interpretation": "All declared shape/contact/timestep combinations must pass for the claimed scope. A smaller passed scope must be explicitly named and cannot be called full three-shape acceptance. Development may change the shared model but all relevant probes must then be rerun with source hashes."
+  },
+  "local_execution_model": {
+    "requirements": [
+      "Report signed full 5x5 action-to-force local response, not only its diagonal.",
+      "Check positive and negative perturbations, load/contact modes, saturation, loss/reacquisition and release.",
+      "Use separate calibration and validation perturbation sequences.",
+      "Return requested and actually applied closure/driver actions and physical domain clips.",
+      "Encoder closure units must match the controller units; raw radians are kept separately.",
+      "Do not reuse the five-pad 14.25 N/closure gain or 5 ms response as a Shadow calibration.",
+      "If using the existing positive-diagonal observer/predictor/infeasibility certificate, validate its domain explicitly.",
+      "A signed/coupled model requires consistent observer, prediction, action conversion, constraints and certificate changes for all methods; solver nonconvergence is not physical infeasibility."
+    ],
+    "validated_active_digit_prediction_rmse_max_N": 0.35,
+    "validated_active_digit_prediction_abs_error_p95_max_N": 0.75,
+    "prediction_horizons_s": [0.02, 0.04, 0.06],
+    "interpretation": "Prediction thresholds are engineering model-fit gates, not a real-force safety guarantee. If a simpler declared local model is not accurate enough, revise the common model rather than hiding force errors or weakening tests after performance comparison."
+  },
+  "observation_contract": {
+    "sample_period_s": 0.005,
+    "decision_period_s": 0.02,
+    "sample_once_per_sensor_tick": true,
+    "virtual_tactile_scope_must_be_declared": true,
+    "required_control_inputs": [
+      "normal[5]", "tangential[5,2]", "contact_pos[5,3]", "contact_normal[5,3]",
+      "tangent_basis[5,2,3]", "slip_local[5,2]", "valid[5]", "age", "time", "dt",
+      "joint[5]", "joint_velocity[5]", "alpha[5]", "raw_joint", "raw_joint_velocity",
+      "support_axis", "phase", "lift", "lift_ref", "closure_min[5]", "closure_max[5]",
+      "closure_permission[5]", "nominal_force_weights[5]", "public_response_model",
+      "motor_effort", "handload_prior", "load_estimate", "load_uncertainty", "load_valid"
+    ],
+    "forbidden_oracles": ["object_full_pose", "object_true_mass", "environment_true_friction", "future_disturbance", "evaluation_stable_marker"],
+    "raw_patches_kept": true,
+    "support_object_force_separate_from_all_external_skin_force": true,
+    "local_slip_includes_angular_velocity_at_contact": true,
+    "old_global_slip_speed_cannot_be_copied_to_five_channels": true,
+    "noise_draw_shape_fixed_per_tick": true,
+    "same_seed_draws_reconstructed_independently": true,
+    "invalid_or_missing_observation_is_not_zero_load": true,
+    "aggregation": {
+      "characteristic_length_m": 0.05,
+      "metric": "per-digit norm([F_reconstructed-F_patch_sum, (M_reconstructed-M_patch_sum)/0.05]) / max(0.1, norm([F_patch_sum,M_patch_sum/0.05]))",
+      "max_relative_scaled_wrench_error": 0.1,
+      "single_patch_transform_abs_error_max": 1e-9,
+      "strict_reject_instead_of_false_valid": true,
+      "report_invalid_coverage_and_reasons": true,
+      "interpretation": "Patch torques and position moments must be included. If a five-channel representation cannot preserve the required wrench, use a declared richer contact representation; do not mask the discrepancy."
+    }
+  },
+  "algorithm_migration": {
+    "primary_methods": ["ratio", "unified"],
+    "secondary_methods_available_when_supported": ["fixed", "independent", "unified_no_continuity", "unified_no_geometry", "unified_fixed_stage"],
+    "legacy_demo_is_separate": true,
+    "legacy_rules_never_added_after_ratio_or_unified": true,
+    "common_observation_and_execution_permissions": true,
+    "common_task_references_and_release_authority": true,
+    "current_method_semantics": "Ratio is a literature-concept migration, not exact paper reproduction; unified is the current tested multi-task force-trajectory scheme. Model/adapter changes must be declared. The proposed next-generation stability-corridor policy is outside this migration.",
+    "evidence_required": ["source_hashes", "requested_force_reference", "estimated_force", "predicted_force_and_time", "applied_action", "solver_status", "transport_pause", "failure_reason"]
+  },
+  "runtime_and_ui": {
+    "shared_trial_core_for_interactive_and_headless": true,
+    "integer_simulation_ticks": true,
+    "rendering_reads_cached_state_only": true,
+    "method_scene_seed_change_creates_new_trial": true,
+    "reset_clears_controller_integral_observer_sensor_queue_rng_and_clock": true,
+    "pause_freezes_simulation_sensor_rng_and_task_schedule": true,
+    "transport_pause_distinct_from_user_pause": true,
+    "commands_have_run_id_sequence_and_applied_tick": true,
+    "image_and_state_have_snapshot_tick": true,
+    "manual_demo_distinct_from_fixed_schedule_experiment": true,
+    "equivalence_abs_qpos_tolerance": 1e-9,
+    "equivalence_abs_force_tolerance_N": 1e-7,
+    "equivalence_scope": "Same platform/model, seed, fixed command schedule and full reset. Tolerances are for render-on/off or frontend speed changes, not different physics timestep comparisons."
+  },
+  "recording_and_evaluation": {
+    "raw_physical_substep_contact_forces_and_durations_required": true,
+    "raw_sensor_stream_actions_and_model_parameters_required": true,
+    "all_hand_object_contact_required_for_release": true,
+    "palm_other_hand_and_obstacle_forces_reported_separately": true,
+    "truth_never_controls_policy": true,
+    "ui_rounded_deque_not_a_formal_metric_source": true,
+    "dimensions": ["whole_task_completion", "first_stable_restricted_wait", "fixed_common_window_per_digit_force_TV_and_SD", "mean_force", "raw_peak_and_excess_exposure", "release_and_coverage"],
+    "failed_tasks_kept_in_task_denominators": true,
+    "predrop_zero_force_not_successful_release": true,
+    "drop_zero_force_not_force_smoothness_benefit": true,
+    "new_geometry_thresholds_and_windows_frozen_before_confirmation": true,
+    "no_weighted_score_that_compensates_task_or_force_failures": true,
+    "saved_geometry_replay_not_dynamic_checkpoint": true
+  },
+  "matched_comparison": {
+    "freeze_model_and_sensor_actuator_calibration_before_method_confirmation": true,
+    "method_development_budget_equal": true,
+    "fresh_confirmation_seeds_not_old_13101_or_14101_series": true,
+    "pair_actual_parameters_disturbance_and_random_noise_draws": true,
+    "predeclare_matrix_and_output_identity_before_new_confirmation": true,
+    "all_planned_records_and_failures_retained": true,
+    "small_representative_comparison_is_exploratory": true,
+    "no_superiority_claim_without_supported_guardrails_and_uncertainty": true
+  },
+  "interpretation_boundaries": [
+    "A source/interface/QP check is not physical acceptance.",
+    "A rendered model or moving hand is not successful strategy integration.",
+    "Finite actuator force is not a guarantee that contact force never exceeds a limit.",
+    "A passed basic physical probe does not establish success under all disturbances.",
+    "A working Shadow simulation is not validation of a clinical prosthesis."
+  ]
+}

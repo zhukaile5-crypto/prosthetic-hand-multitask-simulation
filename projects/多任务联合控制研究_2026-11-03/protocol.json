@@ -1,0 +1,174 @@
+{
+  "schema": "joint-hand-research-protocol-v1",
+  "study_id": "joint_hand_control_research_20261103",
+  "version": 3,
+  "status": "draft_not_admitted",
+  "disclosure": {
+    "old_256_confirmation_seen": true,
+    "old_results_role": "development diagnosis only; never evidence for new joint-policy confirmation",
+    "new_confirmation_started": false,
+    "no_performance_superiority_assumed": true
+  },
+  "methods": ["ratio", "unified", "joint"],
+  "scope": {
+    "plant": "reuse the preserved articulated hand and its accepted shared contact model",
+    "originals_read_only": true,
+    "current_physical_domain": "original base configurations plus the existing robustness sampler only",
+    "new_size_pose_solref_domains": "not admitted without new physical/model validation",
+    "information": "same declared virtual skin, encoders, effort and task requests for all methods; no target mass/friction/pose/contact identity truth in control"
+  },
+  "schedule": {
+    "duration_s": 16.0,
+    "sensor_period_s": 0.005,
+    "decision_period_s": 0.02,
+    "handoff_s": 7.5,
+    "release_s": 12.0,
+    "first_event_s": 9.3
+  },
+  "splits": {
+    "development": {
+      "purpose": "architecture, physics/model admission and metric correctness; findings may be used for development",
+      "seed_policy": "explicit new development seeds; old 256 remain seen diagnostic data",
+      "allowed_methods": ["ratio", "unified", "joint"]
+    },
+    "confirmation": {
+      "status": "not_frozen_do_not_execute",
+      "physical_seeds": [],
+      "noise_replicates_per_physical_seed": null,
+      "scenarios": [],
+      "methods": [],
+      "expected_trials": null,
+      "candidate_design": "32 independent physical seeds x 16 scenarios x 2 or 3 methods; decide only after development/physical validation and resource review",
+      "fresh_holdout_required": true,
+      "pairing": "identical actual physical parameters, initial preparation, random stream policy and task schedule within each physical-seed/scenario block"
+    }
+  },
+  "physical_randomization": {
+    "initial_runner": "legacy physical_parameters(split='robustness')",
+    "mass_multiplier": "clip(1 + 0.06 * standard_normal, 0.85, 1.15)",
+    "friction_multiplier": "clip(1 + 0.08 * standard_normal, 0.80, 1.20)",
+    "physical_seed_stream_offset": 511000,
+    "sensor_seed_stream_offset": 910000,
+    "actual_parameters": "save complete realized config in metadata; evaluation/stratification only",
+    "phase_separation": "metadata.research_phase is development/confirmation; legacy split=robustness selects physical sampling and is not a confirmation authorization"
+  },
+  "thresholds": {
+    "finger_contact_min_N": 0.2,
+    "minimum_contacts_including_thumb": 3,
+    "minimum_object_lift_m": 0.025,
+    "table_support_max_N": 0.05,
+    "lift_tracking_tolerance_m": 0.01,
+    "transport_failure_dwell_s": 0.3,
+    "retention_failure_dwell_s": 0.1,
+    "retention_relative_drift_m": 0.08,
+    "stable_relative_drift_m": 0.005,
+    "stable_relative_speed_m_s": 0.005,
+    "stable_angular_speed_rad_s": 0.15,
+    "stable_dwell_s": 0.2,
+    "force_numerical_tolerance_N": 0.02,
+    "all_hand_clearance_N": 0.2,
+    "release_clearance_dwell_s": 0.2,
+    "release_deadline_s": 3.5,
+    "wrist_tracking_guard": "V2 development engineering endpoint uses actual wrist encoders, 0.015rad and 0.3s; retained legacy mission has its original definition"
+  },
+  "motion_tracking": {
+    "status": "new_development_engineering_contract_not_retrospective_confirmation",
+    "wrist_tolerance_rad": [0.015, 0.015],
+    "failure_dwell_s": 0.3,
+    "interpretation": "Additional full_motion_mission_success requires legacy mission plus actual wrist tracking. Original mission_success and archived outcomes are retained.",
+    "continuous": "Requested user motion against actual lift and wrist encoders: fixed-window duration-weighted RMSE, maximum error and absolute-error integral. Never substitute executed reference for user request."
+  },
+  "endpoints": {
+    "priority": ["mission reliability", "whole-task force safety", "task progress and physical release", "force quality and effort"],
+    "no_weighted_total_score": true,
+    "mission_success": "shared preparation/handoff accepted, no retention or requested-lift tracking failure before release, physical release achieved, complete truth and no physics warning; force guard is reported separately",
+    "force_safety": "all actual instrumented-finger external contact forces at every physical substep and final endpoint, using original per-finger limits/budget plus numerical tolerance; palm/other are recorded without an invented material threshold",
+    "initial_stability": {
+      "origin_s": 7.5,
+      "restricted_horizon_s": 1.4,
+      "unadmitted_or_unattained_contribution_s": 1.4,
+      "name": "post-handoff initial stability waiting; not event recovery"
+    },
+    "static_quality": {"window_s": [8.2, 8.9], "role": "secondary pre-event holding quality; duplicated pre-event conditions must be disclosed"},
+    "dynamic_quality": {
+      "window_s": [9.3, 11.7],
+      "role": "candidate co-primary quality endpoint after reliability/safety gates; final hypothesis order is not yet frozen",
+      "cohort": "complete fixed window with continuous physical support, raised object and no table support; do not require whole-task success or correct task tracking to retain a physically valid force window",
+      "paired_contrast": "same scenario/physical-seed block jointly eligible for the selected force window; report per-method and joint window coverage with all assigned failures retained",
+      "interpretation": "low force variation while pausing or failing mission cannot establish overall superiority"
+    },
+    "force_signal": {
+      "quality": "actual target-object finger normal pressures, evaluated as truth only",
+      "safety": "all external instrumented-finger pressure, including environmental collisions",
+      "filter": "V3 symmetric Hann-windowed sinc FIR, cutoff50Hz, span50ms, separately reflected at public handoff and actual public release command boundaries (scheduled0/7.5/12/16). Force at release instant is pre-action holding endpoint. No future release samples enter earlier holding; scheduled static/dynamic interior windows keep V2 values. Force uses substep END plus measured time-zero sample before200Hz sampling. V1/V2 archives unchanged.",
+      "raw_peaks_and_excess_integrals": "never filtered",
+      "tv_decomposition": {
+        "finger_TV": "sum_i sum_t abs(F_i[t+1]-F_i[t])",
+        "finger_net_drift": "sum_i abs(F_i[end]-F_i[start])",
+        "finger_reversal": "(finger_TV - finger_net_drift)/2; nonnegative path retracing, not automatically sensor noise or undesirable oscillation",
+        "total_force_TV": "sum_t abs(sum_i F_i[t+1]-sum_i F_i[t]); distinct from finger_TV",
+        "normalization": "report N variation and N/s rates using the same actual fixed window duration",
+        "no_posthoc_filtering": true
+      }
+    },
+    "release": {
+      "scheduled_denominator": "every scheduled assigned trial, including failed preparation",
+      "physical_exposure": "at actual release command, thumb plus at least three target-object finger contacts, raised object, no table support and all-hand target contact above clearance threshold; independent of prior transport failure",
+      "physical_release": "physically exposed and all-hand target contact at/below threshold for 200ms within 3.5s",
+      "task_qualified_release": "physical release plus no prior preparation/retention/transport failure; keep this separate from physical exposure and physical clearance",
+      "latency": "conditional on physical exposure and achieved clearance; failed/nonexposed/censored are null, never zero"
+    },
+    "stages": ["shared preparation", "actual policy holding/transport", "mechanical release and after", "post-preparation without admitted policy"],
+    "progress": "requested lift/wrists vs actual robot encoders, requested vs executed command reference, pause fraction and public deadlines; executed reference must not redefine requested task success",
+    "entire_holding_quality": {
+      "window_s": [7.5, 12.0],
+      "role": "Whole policy holding including the 12s physical pre-action endpoint, retaining early redistribution costs in addition to the fixed static/dynamic windows"
+    }
+  },
+  "event_recovery": {
+    "dwell_s": 0.2,
+    "pre_stability_window_s": 0.2,
+    "right_boundary": "exclusive min(next event, release command, actual task failure); boundary sample cannot complete recovery",
+    "physical_collision_onset": "first measured fixture contact above 0.02N, not command time; require stability before actual exposure",
+    "persistent_event": "null end means persistent; recovered under changed condition is during, not after",
+    "never_unstable_latency": null,
+    "statuses": ["invalid_record", "failed_before", "not_exposed", "not_stable_before", "never_unstable", "recovered_during", "recovered_after", "unrecovered", "release_preempt"],
+    "events": {
+      "nominal": [], "cylinder_small": [], "box_heavy": [], "sphere": [],
+      "friction_drop": [{"id":"friction_step","start":9.3,"end":null}],
+      "three_pulses": [{"id":"pull_1","start":9.3,"end":9.6},{"id":"pull_2","start":10.3,"end":10.6},{"id":"pull_3","start":11.3,"end":11.6}],
+      "load_ramp": [{"id":"load_ramp","start":9.3,"end":null}],
+      "fragile_conflict": [{"id":"pull_and_squeeze","start":9.3,"end":10.0}],
+      "local_limit": [{"id":"pull_1","start":9.3,"end":9.6},{"id":"pull_2","start":10.3,"end":10.6},{"id":"pull_3","start":11.3,"end":11.6}],
+      "release_slip": [{"id":"pull_across_release","start":11.7,"end":12.4}],
+      "dynamic_transport": [{"id":"lift_and_wrist_motion","start":9.3,"end":12.0}],
+      "sensor_noise": [],
+      "sensor_dropout": [{"id":"local_dropout","start":9.3,"end":9.7},{"id":"all_dropout","start":11.3,"end":11.4}],
+      "collision": [{"id":"obstacle_approach","start":9.3,"end":10.3,"requires_actual_contact":true}],
+      "infeasible": [],
+      "contact_robustness": [{"id":"friction_and_pull_1","start":9.3,"end":null},{"id":"pull_2","start":10.3,"end":10.6},{"id":"pull_3","start":11.3,"end":11.6}]
+    },
+    "reporting": "all planned event rows and status denominators; own-recovered latency is conditional, not a matched contrast; pair same event and disclose outcome selection for exploratory paired latency"
+  },
+  "statistics": {
+    "status": "pending_development_and_power_review",
+    "unit": "whole paired physical seed across predeclared scenarios and nested noise replicates",
+    "candidate_bootstrap_replicates": 5000,
+    "noninferiority_margins": null,
+    "primary_hypothesis_order": null,
+    "multiple_testing": "freeze family and adjustment before confirmation; no new primary significance tests after seeing holdout",
+    "descriptive_only_until_frozen": true
+  },
+  "confirmation_gate": {
+    "require_status": "frozen",
+    "require_exact_planned_cartesian_product": true,
+    "require_fresh_physical_seeds": true,
+    "require_shared_physical_validation": true,
+    "require_model_domain_admission_for_every_claimed_condition": true,
+    "require_frozen_controller_runner_evaluator_sources": true,
+    "require_statistics_frozen": true,
+    "frozen_source_sha256": {},
+    "physical_validation": null,
+    "old_256_may_not_enter_confirmation": true
+  }
+}

@@ -1,0 +1,42 @@
+<mujoco model="PBL basic reflex grasp">
+  <compiler angle="radian"/>
+  <option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast" cone="elliptic" iterations="100" noslip_iterations="5"/>
+  <visual><global offwidth="900" offheight="600"/><quality shadowsize="2048"/></visual>
+  <default>
+    <joint damping="4"/>
+    <geom friction=".6 .005 .0001" solref=".02 1" solimp=".95 .99 .002" condim="3"/>
+  </default>
+  <asset>
+    <texture name="floor" type="2d" builtin="checker" rgb1=".90 .92 .94" rgb2=".82 .86 .89" width="256" height="256"/>
+    <material name="floor_mat" texture="floor" texrepeat="5 5" reflectance=".08"/>
+  </asset>
+  <worldbody>
+    <light pos=".2 -.4 1" dir="-.2 .3 -1" diffuse=".9 .9 .9"/>
+    <light pos="-.4 .2 .8" dir=".4 -.2 -1" diffuse=".5 .5 .5"/>
+    <geom name="floor" type="plane" size=".7 .7 .1" material="floor_mat" contype="4" conaffinity="2"/>
+    <geom name="table" type="box" pos="0 0 .045" size=".075 .065 .045" rgba=".46 .55 .62 1" contype="4" conaffinity="2"/>
+    <body name="carriage" pos="0 0 0">
+      <joint name="lift" type="slide" axis="0 0 1" range="0 .14" damping="8"/>
+      <geom type="box" pos="0 .055 .12" size=".07 .012 .012" mass=".18" rgba=".18 .29 .40 1" contype="0" conaffinity="0"/>
+      <body name="left" pos="-.045 0 .114">
+        <joint name="left_slide" type="slide" axis="1 0 0" range="0 .032" damping="20"/>
+        <geom name="left_pad" type="box" size=".008 .022 .029" mass=".06" rgba=".22 .62 .70 1" contype="1" conaffinity="2"/>
+        <geom type="capsule" fromto="0 .022 .008 0 .052 .008" size=".006" mass=".015" rgba=".18 .29 .40 1" contype="0" conaffinity="0"/>
+      </body>
+      <body name="right" pos=".045 0 .114">
+        <joint name="right_slide" type="slide" axis="-1 0 0" range="0 .032" damping="20"/>
+        <geom name="right_pad" type="box" size=".008 .022 .029" mass=".06" rgba=".22 .62 .70 1" contype="1" conaffinity="2"/>
+        <geom type="capsule" fromto="0 .022 .008 0 .052 .008" size=".006" mass=".015" rgba=".18 .29 .40 1" contype="0" conaffinity="0"/>
+      </body>
+    </body>
+    <body name="object" pos="0 0 .112">
+      <freejoint/>
+      <geom name="object_geom" type="box" size=".017 .018 .022" mass=".12" rgba=".96 .60 .18 1" contype="2" conaffinity="5"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="lift_motor" joint="lift" kp="700" kv="45" ctrlrange="0 .13" forcerange="-30 30"/>
+    <motor name="left_motor" joint="left_slide" ctrlrange="-8 8"/>
+    <motor name="right_motor" joint="right_slide" ctrlrange="-8 8"/>
+  </actuator>
+</mujoco>

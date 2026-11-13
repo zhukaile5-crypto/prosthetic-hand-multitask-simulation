@@ -1,0 +1,37 @@
+"""Bind actual V25 capability output and unchanged author evidence, no model."""
+from pathlib import Path
+import hashlib,json
+ROOT=Path(__file__).resolve().parents[1];FOUNDATION=ROOT.parent/'五指策略接入_2026-11-03'
+def read(p):return json.loads(p.read_text(encoding='utf-8'))
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+
+out=ROOT/'output/v25_response_capability_zero_v1'
+cap=read(out/'capability_zero.json');complete=read(out/'execution_complete.json');env=read(out/'environment.json')
+author_path=ROOT/'review/v25_runtime_author_attempt2.json';author=read(author_path)
+identity=complete['source_sha256'];parent=read(ROOT/'review/v24_small_plan_v1.json')['source_sha256']
+checks=[]
+def ck(name,good):
+    checks.append(dict(name=name,passed=bool(good)))
+    if not good:raise AssertionError(name)
+ck('actual_capability_and_complete_both_pass',cap['passed'] and complete['passed'] and complete['execution_complete'] and complete['runtime_failures']==[])
+ck('actual_full198_source_identity',len(identity)==198 and identity==cap['production_source_sha256'])
+ck('all_current198_source_bytes_match',all(sha(FOUNDATION/k[11:] if k.startswith('foundation/') else ROOT/k)==v for k,v in identity.items()))
+ck('actual_parent192_preserved',len(parent)==192 and parent==complete['parent192_source_sha256'] and all(identity.get(k)==v for k,v in parent.items()))
+ck('parent_plan_pin_preserved',sha(ROOT/'review/v24_small_plan_v1.json')==complete['parent192_registered_plan_sha256'])
+ck('source_and_numerical_prepost_equal',complete['sources_unchanged'] and complete['numerical_unchanged'] and cap['numerical_identity']==complete['numerical_identity']==env['numerical_identity'])
+ck('original42_environment_same',env['pinned_environment']==complete['environment']==complete['numerical_identity']['legacy_pinned_environment'] and len(env['pinned_environment']['native_binaries_sha256'])==42)
+ck('time_tick_sensors_observations_receipts_all_zero',all(cap[k]==0 for k in ('time_s','tick','sensor_samples','observer_packets','actual_receipts')))
+ck('integration_forbidden_and_not_called',cap['physics_steps']==complete['physics_steps']==0)
+ck('author31_pass_and_same_owned_sources',author['passed'] and len(author['checks'])==31 and all(identity.get(k)==v for k,v in author['source_sha256'].items()))
+author_final=ROOT/'review/v25_runtime_author_final_v1.json';assert not author_final.exists();author_final.write_bytes(author_path.read_bytes())
+result=dict(schema='v25_runtime_capability_zero_gate_v1',passed=True,checks=checks,
+    production_source_sha256=identity,source_sha256=identity,source_count=len(identity),parent192_source_sha256=parent,
+    numerical_identity=complete['numerical_identity'],environment=complete['environment'],
+    physics_steps=0,initialization_forward_calls=cap['initialization_forward_calls'],
+    time_s=cap['time_s'],tick=cap['tick'],sensor_samples=cap['sensor_samples'],
+    input_sha256={str(p.relative_to(ROOT)):sha(p) for p in (out/'capability_zero.json',out/'execution_complete.json',out/'source_snapshot_manifest.json',out/'environment.json',out/'plan.json',author_final)},
+    actual_output=str(out),actual_command='python -B -m v25_response_identification.run_identification --capability-zero --out output/v25_response_capability_zero_v1',
+    full_remaining_fork_bridge_passed=False,scope='Actual V25 passive constructor/198 source and numerical identity gate. No sensor acquisition, fork, step, or remaining16s behaviour is claimed.')
+target=ROOT/'review/v25_runtime_capability_zero_v1.json';assert not target.exists()
+target.write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+print(json.dumps(dict(gate=str(target),sha256=sha(target),checks=len(checks),forward_calls=cap['initialization_forward_calls'],author_alias=str(author_final),author_sha256=sha(author_final),production_source_sha256={k:v for k,v in identity.items() if k.startswith('v25_')}),ensure_ascii=False))

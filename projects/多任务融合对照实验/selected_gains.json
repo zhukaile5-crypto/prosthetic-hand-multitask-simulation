@@ -1,0 +1,52 @@
+{
+  "constant": {
+    "base": 1.45
+  },
+  "event": {
+    "base": 1.45,
+    "step_rate": 14.0
+  },
+  "ratio": {
+    "ratio_kp": 1.0,
+    "ratio_ki": 0.3,
+    "ratio_floor": 1.8,
+    "base": 1.2
+  },
+  "adaptive": {
+    "adaptive_floor": 1.15,
+    "adaptive_rate": 6.0,
+    "base": 1.2
+  },
+  "fusion": {
+    "ratio_kp": 7.0,
+    "ratio_ki": 6.0,
+    "fusion_slip_rate": 32.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.04,
+    "base": 1.2
+  },
+  "fusion_no_prediction": {
+    "ratio_kp": 7.0,
+    "ratio_ki": 6.0,
+    "fusion_slip_rate": 32.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.04,
+    "base": 1.2
+  },
+  "fusion_no_distribution": {
+    "ratio_kp": 7.0,
+    "ratio_ki": 6.0,
+    "fusion_slip_rate": 32.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.04,
+    "base": 1.2
+  },
+  "fusion_no_filter": {
+    "ratio_kp": 7.0,
+    "ratio_ki": 6.0,
+    "fusion_slip_rate": 32.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.04,
+    "base": 1.2
+  }
+}

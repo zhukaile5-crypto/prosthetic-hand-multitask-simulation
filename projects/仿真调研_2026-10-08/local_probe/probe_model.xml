@@ -1,0 +1,8 @@
+<mujoco model="two_jaw_environment_probe">
+<option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast"/>
+<default><joint damping="1"/><geom friction=".8 .005 .0001" solref=".01 1" condim="3"/></default>
+<worldbody><light pos="0 -1 2"/><geom name="floor" type="plane" size=".3 .3 .1" rgba=".86 .88 .9 1"/>
+<body name="left" pos="-.035 0 .15"><joint name="left_slide" type="slide" axis="1 0 0" range="0 .025"/><geom name="left_pad" type="box" size=".005 .025 .035" mass=".1" rgba=".16 .4 .7 1"/></body>
+<body name="right" pos=".035 0 .15"><joint name="right_slide" type="slide" axis="-1 0 0" range="0 .025"/><geom name="right_pad" type="box" size=".005 .025 .035" mass=".1" rgba=".16 .4 .7 1"/></body>
+<body name="object" pos="0 0 .15"><freejoint name="object_free"/><geom name="object_geom" type="box" size=".015 .015 .018" mass=".1" rgba=".95 .55 .18 1"/></body>
+</worldbody><actuator><motor joint="left_slide" ctrlrange="-4 4"/><motor joint="right_slide" ctrlrange="-4 4"/></actuator></mujoco>

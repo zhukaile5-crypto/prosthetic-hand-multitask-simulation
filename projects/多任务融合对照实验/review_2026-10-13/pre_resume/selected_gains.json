@@ -1,0 +1,32 @@
+{
+  "event": {
+    "step_rate": 14.0
+  },
+  "ratio": {
+    "ratio_kp": 3.0,
+    "ratio_ki": 3.0
+  },
+  "adaptive": {},
+  "fusion": {
+    "ratio_kp": 3.0,
+    "ratio_ki": 2.0,
+    "fusion_slip_rate": 24.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.015
+  },
+  "fusion_no_prediction": {
+    "ratio_kp": 3.0,
+    "ratio_ki": 2.0,
+    "fusion_slip_rate": 24.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.015
+  },
+  "fusion_no_distribution": {
+    "ratio_kp": 3.0,
+    "ratio_ki": 2.0,
+    "fusion_slip_rate": 24.0,
+    "fusion_floor": 1.45,
+    "predict_horizon": 0.015
+  },
+  "constant": {}
+}

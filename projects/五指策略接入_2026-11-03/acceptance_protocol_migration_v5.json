@@ -1,0 +1,480 @@
+{
+  "schema": "shadow-hand-integration-acceptance-v5-distributed-contact-and-refined-physics",
+  "status": "common-interface-and-numerical-design-before-any-policy-performance-data",
+  "benchmark_id": "shadow_hand_strategy_integration_v1",
+  "purpose": "Establish faithful observation/execution migration and a credible matched comparison; no presumed performance advantage.",
+  "protected_history": {
+    "legacy_demo": "../五指假肢抓握仿真",
+    "five_pad_benchmark": "../统一人工反射重构",
+    "immutable_inventory": "review/preservation_before.json",
+    "requirements": [
+      "Write only in this independent integration directory.",
+      "Do not import old project modules in a way that writes old bytecode or logs.",
+      "Compare original SHA256/byte counts against the bootstrap inventory before delivery.",
+      "The old 2240 formal trials remain a separate model/experiment; never merge with Shadow results.",
+      "Preserve failed development probes in separate uniquely named evidence directories."
+    ]
+  },
+  "phase_order": [
+    "isolated_assets_and_preservation_inventory",
+    "observation_and_actuation_contracts",
+    "common_physical_foundation_acceptance",
+    "current_ratio_and_unified_migration",
+    "interactive_and_headless_equivalence",
+    "matched_development_then_new_confirmation_and_comprehensive_readout"
+  ],
+  "physical_foundation": {
+    "probe_is_not_an_algorithm_comparison": true,
+    "shared_probe_reference_N": [
+      3.0,
+      1.8,
+      1.8,
+      1.8,
+      1.8
+    ],
+    "target_lift_m": 0.1,
+    "duration_s": 14.0,
+    "release_command_s": 10.0,
+    "static_window_s": [
+      8.2,
+      8.9
+    ],
+    "shapes": [
+      "capsule",
+      "box",
+      "sphere"
+    ],
+    "contact_time_constants_s": [
+      0.008,
+      0.012
+    ],
+    "physical_timesteps_s": [
+      0.0005,
+      0.00025
+    ],
+    "matrix_size": 12,
+    "gates": {
+      "free_object": "A genuine six-DOF object, no weld/equality or scripted position attachment used to hold it.",
+      "finite_actuation": "All joint/tendon/lift actuators finite and original physical force signals never clipped.",
+      "numerical_warnings_max": 0,
+      "max_hand_object_penetration_m": 0.002,
+      "lift_error_max_m": 0.01,
+      "minimum_object_lift_from_initial_m": 0.07,
+      "minimum_supported_digits": 3,
+      "required_digit": 0,
+      "digit_contact_min_N": 0.2,
+      "table_support_max_N": 0.05,
+      "static_support_coverage_min": 1.0,
+      "release_command_requires_prior_support": true,
+      "release_all_hand_object_force_max_N": 0.2,
+      "release_dwell_s": 0.2,
+      "release_deadline_s": 3.5,
+      "step_halving_same_task_outcome": true,
+      "step_halving_static_mean_force_relative_difference_max": 0.1,
+      "step_halving_peak_force_relative_difference_max": 0.15
+    },
+    "interpretation": "All declared shape/contact/timestep combinations must pass for the claimed scope. A smaller passed scope must be explicitly named and cannot be called full three-shape acceptance. Development may change the shared model but all relevant probes must then be rerun with source hashes."
+  },
+  "local_execution_model": {
+    "requirements": [
+      "Report signed full 5x5 action-to-force local response, not only its diagonal.",
+      "Check positive and negative perturbations, load/contact modes, saturation, loss/reacquisition and release.",
+      "Use separate calibration and validation perturbation sequences.",
+      "Return requested and actually applied closure/driver actions and physical domain clips.",
+      "Encoder closure units must match the controller units; raw radians are kept separately.",
+      "Do not reuse the five-pad 14.25 N/closure gain or 5 ms response as a Shadow calibration.",
+      "If using the existing positive-diagonal observer/predictor/infeasibility certificate, validate its domain explicitly.",
+      "A signed/coupled model requires consistent observer, prediction, action conversion, constraints and certificate changes for all methods; solver nonconvergence is not physical infeasibility."
+    ],
+    "validated_active_digit_prediction_rmse_max_N": 0.35,
+    "validated_active_digit_prediction_abs_error_p95_max_N": 0.75,
+    "prediction_horizons_s": [
+      0.02,
+      0.04,
+      0.06
+    ],
+    "interpretation": "Prediction thresholds are engineering model-fit gates, not a real-force safety guarantee. If a simpler declared local model is not accurate enough, revise the common model rather than hiding force errors or weakening tests after performance comparison."
+  },
+  "observation_contract": {
+    "sample_period_s": 0.005,
+    "decision_period_s": 0.02,
+    "sample_once_per_sensor_tick": true,
+    "virtual_tactile_scope_must_be_declared": true,
+    "required_control_inputs": [
+      "normal[5]",
+      "tangential[5,2]",
+      "contact_pos[5,3]",
+      "contact_normal[5,3]",
+      "tangent_basis[5,2,3]",
+      "slip_local[5,2]",
+      "valid[5]",
+      "age",
+      "time",
+      "dt",
+      "joint[5]",
+      "joint_velocity[5]",
+      "alpha[5]",
+      "raw_joint",
+      "raw_joint_velocity",
+      "support_axis",
+      "phase",
+      "lift",
+      "lift_ref",
+      "closure_min[5]",
+      "closure_max[5]",
+      "closure_permission[5]",
+      "nominal_force_weights[5]",
+      "public_response_model",
+      "motor_effort",
+      "handload_prior",
+      "load_estimate",
+      "load_uncertainty",
+      "load_valid",
+      "auxiliary_wrench[6]",
+      "auxiliary_pressure",
+      "auxiliary_valid",
+      "auxiliary_age",
+      "auxiliary_uncertainty",
+      "normal_wrench_map[6,5]",
+      "finger_non_normal_wrench[6]",
+      "finger_non_normal_by_finger[5,6]",
+      "normal_support_coeff[5]",
+      "tangent_support_coeff[5]",
+      "shear_magnitude[5]",
+      "slip_magnitude[5]",
+      "contact_present[5]",
+      "distributed_valid[5]",
+      "distributed_error[5]"
+    ],
+    "forbidden_oracles": [
+      "object_full_pose",
+      "object_true_mass",
+      "environment_true_friction",
+      "future_disturbance",
+      "evaluation_stable_marker"
+    ],
+    "raw_patches_kept": true,
+    "support_object_force_separate_from_all_external_skin_force": true,
+    "local_slip_includes_angular_velocity_at_contact": true,
+    "old_global_slip_speed_cannot_be_copied_to_five_channels": true,
+    "noise_draw_shape_fixed_per_tick": true,
+    "same_seed_draws_reconstructed_independently": true,
+    "invalid_or_missing_observation_is_not_zero_load": true,
+    "aggregation": {
+      "characteristic_length_m": 0.05,
+      "metric": "per-digit norm([F_reconstructed-F_patch_sum, (M_reconstructed-M_patch_sum)/0.05]) / max(0.1, norm([F_patch_sum,M_patch_sum/0.05]))",
+      "max_relative_scaled_wrench_error": 0.1,
+      "single_patch_transform_abs_error_max": 1e-09,
+      "strict_reject_instead_of_false_valid": true,
+      "report_invalid_coverage_and_reasons": true,
+      "interpretation": "Patch torques and position moments must be included. If a five-channel representation cannot preserve the required wrench, use a declared richer contact representation; do not mask the discrepancy.",
+      "production_representation": "distributed-normal-wrench-map-plus-measured-non-normal-wrench",
+      "legacy_single_point_threshold_unchanged": true,
+      "legacy_single_point_error_still_reported": true,
+      "legacy_point_fields_do_not_drive_production_geometry": true
+    },
+    "random_draws_per_tick": {
+      "gaussian": 48,
+      "uniform": 6,
+      "gaussian_components": {
+        "existing_finger_encoder_effort_stream": 41,
+        "auxiliary_force": 3,
+        "auxiliary_moment": 3,
+        "auxiliary_pressure": 1
+      },
+      "uniform_components": {
+        "finger_dropout": 5,
+        "auxiliary_dropout": 1
+      },
+      "draw_even_without_contact": true
+    },
+    "auxiliary_tactile": {
+      "scope": "All palm and non-digit hand contacts with external bodies, excluding hand self-contact; no target-identity filtering.",
+      "wrench_order": [
+        "Fx",
+        "Fy",
+        "Fz",
+        "Mx",
+        "My",
+        "Mz"
+      ],
+      "coordinate_frame": "palm",
+      "force_direction": "hand-on-external-body",
+      "moment_origin": "palm origin, including contact torques and r cross force",
+      "units": [
+        "N",
+        "N",
+        "N",
+        "N m",
+        "N m",
+        "N m"
+      ],
+      "time_alignment": "same acquisition time and delay as finger tactile geometry",
+      "age_validity_and_noise_explicit": true,
+      "engineering_uncertainty_not_a_hard_bound": true,
+      "same_sensor_permissions_for_all_methods": true,
+      "no_direct_target_object_support_label": true,
+      "usage": "Full-hand total tactile load accounting and diagnostics only. Palm may passively carry object load; it is not a separately controlled force variable.",
+      "no_optimistic_subtraction_from_finger_support_demand": true,
+      "reason": "A non-target external collision can contribute to this sensor; without target identity it cannot be assumed to be useful object support.",
+      "total_load_fusion": "Bring finger tactile plus auxiliary and motor-effort estimates to a consistent total-load definition. Never subtract auxiliary twice from a mixed finger-only/motor-total fusion.",
+      "missing_or_stale_auxiliary": "Invalid auxiliary is not zero true load and cannot provide a favorable force-reduction credit."
+    },
+    "distributed_contact": {
+      "coordinate_frame": "palm; same acquisition time as all tactile measurements",
+      "all_external_skin_contact_no_target_identity_filter": true,
+      "normal_wrench_map_definition": "For digit i with measured total pressure N_i, column i is sum_j (n_j/N_i)*[d_j, p_j cross d_j]. The force vector is not unit-normalized. Moment rows are physical metres, not divided by 0.05.",
+      "non_normal_wrench_definition": "Sum of measured tangential forces, their position moments and patch torques; not a prediction of friction capacity.",
+      "raw_representation_reconstruction": "normal_wrench_map @ normal_pressure + measured_non_normal_wrench equals the original sum of every finger patch wrench.",
+      "raw_reconstruction_scaled_wrench_abs_error_max": 1e-09,
+      "raw_reconstruction_error_norm": "norm([delta_force,delta_moment/0.05])",
+      "contact_presence": "Actual measured valid patch/pressure and distributed validity; never infer no contact merely from an averaged normal vector cancelling.",
+      "shear_magnitude": "Per-digit sum of patch tangential-force magnitudes; consumed by friction-ratio feedback and local shear demand.",
+      "slip_magnitude": "Per-digit maximum patch tangential relative speed; consumed by slip detection.",
+      "net_support_capacity_coefficient": "signed normal_support_coeff + mu_safe * tangent_support_coeff; negative normal contributions are retained in the QP net support inequality.",
+      "positive_contact_ranking": "A separate positive ranking view may be used, but it must not replace signed net-support coefficients.",
+      "measured_non_normal_wrench_not_credited_as_guaranteed_future_capacity": true,
+      "sensor_noise_and_model_error_remain_explicit": true,
+      "strict_rejection": "Invalid production distributed representation yields invalid observation; no strict=False bypass or 10% point-error relaxation.",
+      "legacy_point_failure_interpretation": "The original single-point approximation remains failed where its error exceeds 10%. Production acceptance uses a richer measured representation instead of pretending the failed approximation passed."
+    }
+  },
+  "algorithm_migration": {
+    "primary_methods": [
+      "ratio",
+      "unified"
+    ],
+    "secondary_methods_available_when_supported": [
+      "fixed",
+      "independent",
+      "unified_no_continuity",
+      "unified_no_geometry",
+      "unified_fixed_stage"
+    ],
+    "legacy_demo_is_separate": true,
+    "legacy_rules_never_added_after_ratio_or_unified": true,
+    "common_observation_and_execution_permissions": true,
+    "common_task_references_and_release_authority": true,
+    "current_method_semantics": "Ratio is a literature-concept migration, not exact paper reproduction; unified is the current tested multi-task force-trajectory scheme. Model/adapter changes must be declared. The proposed next-generation stability-corridor policy is outside this migration.",
+    "evidence_required": [
+      "source_hashes",
+      "requested_force_reference",
+      "estimated_force",
+      "predicted_force_and_time",
+      "applied_action",
+      "solver_status",
+      "transport_pause",
+      "failure_reason"
+    ],
+    "scope": "Current ratio/unified force policies take over a commonly prepared held grasp inside a validated local execution-model domain. This first transfer does not claim policy-controlled grasp discovery, contact acquisition or initial lifting.",
+    "handoff": {
+      "fixed_time_s": 7.5,
+      "preparation_deadline_s": 7.5,
+      "preparation": "Same publicly specified preparation and sensor/observer history for every method.",
+      "causal_control_conditions": "Only public task clock, encoders and declared virtual tactile observations decide control admission. Object truth does not decide control.",
+      "evaluation_admission": "Independent physical truth checks whether a valid held/lifted grasp was actually prepared; it does not feed back to control.",
+      "failed_preparation": "Retain in every scheduled whole-task denominator; never silently select only prepared trials.",
+      "state_reset": "Each run has fresh policy integral/ratio state, observer history, sensor queue, RNG and clock. No state from another method/run is reused.",
+      "after_handoff": "Only the selected current strategy plus common execution/constraints; preparation or legacy reflexes must not continue adding actions.",
+      "local_execution_domain": "Bound all executed commands to an independently validated holding trust region. Log requested/applied actions, clipping and domain exits. No extrapolation from holding calibration to CLOSING is claimed."
+    }
+  },
+  "runtime_and_ui": {
+    "shared_trial_core_for_interactive_and_headless": true,
+    "integer_simulation_ticks": true,
+    "rendering_reads_cached_state_only": true,
+    "method_scene_seed_change_creates_new_trial": true,
+    "reset_clears_controller_integral_observer_sensor_queue_rng_and_clock": true,
+    "pause_freezes_simulation_sensor_rng_and_task_schedule": true,
+    "transport_pause_distinct_from_user_pause": true,
+    "commands_have_run_id_sequence_and_applied_tick": true,
+    "image_and_state_have_snapshot_tick": true,
+    "manual_demo_distinct_from_fixed_schedule_experiment": true,
+    "equivalence_abs_qpos_tolerance": 1e-09,
+    "equivalence_abs_force_tolerance_N": 1e-07,
+    "equivalence_scope": "Same platform/model, seed, fixed command schedule and full reset. Tolerances are for render-on/off or frontend speed changes, not different physics timestep comparisons."
+  },
+  "recording_and_evaluation": {
+    "raw_physical_substep_contact_forces_and_durations_required": true,
+    "raw_sensor_stream_actions_and_model_parameters_required": true,
+    "all_hand_object_contact_required_for_release": true,
+    "palm_other_hand_and_obstacle_forces_reported_separately": true,
+    "truth_never_controls_policy": true,
+    "ui_rounded_deque_not_a_formal_metric_source": true,
+    "dimensions": [
+      "whole_task_completion",
+      "first_stable_restricted_wait",
+      "fixed_common_window_per_digit_force_TV_and_SD",
+      "mean_force",
+      "raw_peak_and_excess_exposure",
+      "release_and_coverage"
+    ],
+    "failed_tasks_kept_in_task_denominators": true,
+    "predrop_zero_force_not_successful_release": true,
+    "drop_zero_force_not_force_smoothness_benefit": true,
+    "new_geometry_thresholds_and_windows_frozen_before_confirmation": true,
+    "no_weighted_score_that_compensates_task_or_force_failures": true,
+    "saved_geometry_replay_not_dynamic_checkpoint": true,
+    "transfer_reporting": {
+      "whole_task_with_preparation_failures": true,
+      "preparation_success_and_strategy_handoff_coverage_separate": true,
+      "post_handoff_stability_wait_and_total_first_stability_separate": true,
+      "conditional_held_grasp_quality_denominator_explicit": true,
+      "shared_initial_stability_does_not_prove_faster_policy_acquisition": true,
+      "no_change_to_raw_force_or_release_gates": true
+    }
+  },
+  "matched_comparison": {
+    "freeze_model_and_sensor_actuator_calibration_before_method_confirmation": true,
+    "method_development_budget_equal": true,
+    "fresh_confirmation_seeds_not_old_13101_or_14101_series": true,
+    "pair_actual_parameters_disturbance_and_random_noise_draws": true,
+    "predeclare_matrix_and_output_identity_before_new_confirmation": true,
+    "all_planned_records_and_failures_retained": true,
+    "small_representative_comparison_is_exploratory": true,
+    "no_superiority_claim_without_supported_guardrails_and_uncertainty": true,
+    "initial_transfer_timing": {
+      "duration_s": 16.0,
+      "handoff_s": 7.5,
+      "first_disturbance_not_before_s": 9.3,
+      "release_command_s": 12.0,
+      "release_deadline_after_command_s": 3.5,
+      "release_dwell_s": 0.2,
+      "main_static_window_absolute_s": [
+        8.2,
+        8.9
+      ],
+      "post_handoff_first_stability_horizon_s": 1.4,
+      "post_handoff_first_stability_origin_s": 7.5,
+      "post_handoff_first_stability_definition": "Restricted waiting from fixed t=7.5 to the first independently verified stable dwell by t=8.9. If none completes, contribution is the full 1.4 s horizon. Preparation failures stay in every scheduled whole-task denominator and must be explicit in conditional summaries.",
+      "whole_task_first_stability_also_reported": true,
+      "shared_preparation_not_attributed_to_strategy_speed": true
+    }
+  },
+  "interpretation_boundaries": [
+    "A source/interface/QP check is not physical acceptance.",
+    "A rendered model or moving hand is not successful strategy integration.",
+    "Finite actuator force is not a guarantee that contact force never exceeds a limit.",
+    "A passed basic physical probe does not establish success under all disturbances.",
+    "A working Shadow simulation is not validation of a clinical prosthesis.",
+    "Full-hand natural palm support is allowed and measured; this is not a claim that five finger friction alone carries the object."
+  ],
+  "design_revision": {
+    "created_utc": "2026-11-04T01:20:35.334708+00:00",
+    "parent_protocol": "acceptance_protocol.json",
+    "parent_sha256": "63465a3e4adbfd8deba952a2cb1251398b8c319258f48c08b1282e980aba4ed1",
+    "changed_field": "physical_foundation.contact_time_constants_s",
+    "old_values": [
+      0.02,
+      0.03
+    ],
+    "new_values": [
+      0.008,
+      0.012
+    ],
+    "reason": "Original shared contact family exceeded the already fixed 2 mm hand-object penetration gate during physical development; choose a new common contact design and rerun every shape/contact/timestep lifecycle before policies.",
+    "motivating_evidence": "review\\foundation_capsule_probe_v4\\summary.json",
+    "motivating_evidence_sha256": "142dfd70bf98b93cafe107bc3f7839a240f70e44527df385f270b5e4e820ccb0",
+    "observed_max_penetration_m": 0.004324071597882575,
+    "unchanged_gates": {
+      "free_object": "A genuine six-DOF object, no weld/equality or scripted position attachment used to hold it.",
+      "finite_actuation": "All joint/tendon/lift actuators finite and original physical force signals never clipped.",
+      "numerical_warnings_max": 0,
+      "max_hand_object_penetration_m": 0.002,
+      "lift_error_max_m": 0.01,
+      "minimum_object_lift_from_initial_m": 0.07,
+      "minimum_supported_digits": 3,
+      "required_digit": 0,
+      "digit_contact_min_N": 0.2,
+      "table_support_max_N": 0.05,
+      "static_support_coverage_min": 1.0,
+      "release_command_requires_prior_support": true,
+      "release_all_hand_object_force_max_N": 0.2,
+      "release_dwell_s": 0.2,
+      "release_deadline_s": 3.5,
+      "step_halving_same_task_outcome": true,
+      "step_halving_static_mean_force_relative_difference_max": 0.1,
+      "step_halving_peak_force_relative_difference_max": 0.15
+    },
+    "scope": "The former design remains failed history. This changes shared simulated contact mechanics, not the acceptance limit or a policy parameter. It does not establish physical realism of a specific prosthesis.",
+    "root_agreed_before_new_policy_data": true
+  },
+  "observation_revision": {
+    "created_utc": "2026-11-04T01:27:46.471385+00:00",
+    "parent_protocol": "acceptance_protocol_foundation_v2.json",
+    "parent_sha256": "fdf1bbbfaeef08617a41909873b80ba16b7c4d2598a31820ddc9bdd874d65816",
+    "new_fields": [
+      "auxiliary_wrench[6]",
+      "auxiliary_pressure",
+      "auxiliary_valid",
+      "auxiliary_age",
+      "auxiliary_uncertainty"
+    ],
+    "reason": "The articulated hand has passive palm/non-digit contacts absent from a five-pad-only interface. Explicit virtual tactile instrumentation permits common full-hand observation without leaking target identity.",
+    "physical_gates_unchanged": true,
+    "source_at_registration": {
+      "contracts.py": "7dfcdc9224dfb7c3e786565002809210c5db643127d8e1440cc5922a53e5dd22",
+      "sensors.py": "2156afcd63da62f4575d92d206ee30f8447154dec754c1be82888f8eeeaddaa1"
+    },
+    "root_decision": "Auxiliary wrench is common observation and total-load accounting; the current unified controller retains conservative total-load support demand. This is physical migration, not the proposed stability-corridor policy."
+  },
+  "handoff_revision": {
+    "created_utc": "2026-11-04T01:31:53.871037+00:00",
+    "parent_protocol": "acceptance_protocol_full_hand_v3.json",
+    "parent_sha256": "bdb42ede3bbe913456db6fc4fc8bef7251afc5f2cd3222c2fb8f4f3b1638f86f",
+    "reason": "The empirically identified signed/coupled local response is a holding model. First transfer is bounded to that validated regime rather than pretending it models initial free-space closure and contact acquisition.",
+    "physical_probe_matrix_and_gates_unchanged": true,
+    "future_scope": "Full acquisition/lifting policy control needs its own contact-mode model and independent validation; it is not silently claimed by this transfer."
+  },
+  "distributed_numerical_revision": {
+    "created_utc": "2026-11-04T01:36:05.951458+00:00",
+    "parent_protocol": "acceptance_protocol_handoff_v4.json",
+    "parent_sha256": "c7523b633f7c325e6648e935eec0f4fa9d1f2709e9fb8e7925fdb3a9363a93bd",
+    "changed_model_designs": {
+      "physical_timesteps_s": {
+        "old": [
+          0.001,
+          0.0005
+        ],
+        "new": [
+          0.0005,
+          0.00025
+        ]
+      },
+      "contact_representation": {
+        "old": "one equivalent point and unit normal per finger",
+        "new": "distributed 6x5 normal wrench map with separately measured non-normal wrench and patch-magnitude features"
+      }
+    },
+    "physical_timestep_reason": "The complete old 1 ms/0.5 ms matrix passed holding/penetration/release but failed the fixed 15% raw lifecycle peak-force step-sensitivity gate. Refine both compared physical steps and rerun the full matrix.",
+    "failed_matrix_evidence": "review\\independent_foundation_matrix_v1_failed.json",
+    "failed_matrix_evidence_sha256": "efdcf5ae72e3e05626f70e28a05fddbf28c11607a7dd2c1fccab6f63dc74b27d",
+    "distributed_reason": "Box/sphere multiple-patch contact cannot reliably be compressed to one unit normal and point within the original 10% wrench criterion. Retain those failed approximation diagnostics and expose a physically richer common measurement interface.",
+    "observation_source_at_registration": {
+      "contracts.py": "c6a72694869ea376c6558583393afda9213fcf5fa7ff8a7b481cf635f2551e49",
+      "sensors.py": "4ff436d807a61860747d07537349c5c1de43fbd876ef5b353ca513ae0e56c462"
+    },
+    "unchanged_physical_gates": {
+      "free_object": "A genuine six-DOF object, no weld/equality or scripted position attachment used to hold it.",
+      "finite_actuation": "All joint/tendon/lift actuators finite and original physical force signals never clipped.",
+      "numerical_warnings_max": 0,
+      "max_hand_object_penetration_m": 0.002,
+      "lift_error_max_m": 0.01,
+      "minimum_object_lift_from_initial_m": 0.07,
+      "minimum_supported_digits": 3,
+      "required_digit": 0,
+      "digit_contact_min_N": 0.2,
+      "table_support_max_N": 0.05,
+      "static_support_coverage_min": 1.0,
+      "release_command_requires_prior_support": true,
+      "release_all_hand_object_force_max_N": 0.2,
+      "release_dwell_s": 0.2,
+      "release_deadline_s": 3.5,
+      "step_halving_same_task_outcome": true,
+      "step_halving_static_mean_force_relative_difference_max": 0.1,
+      "step_halving_peak_force_relative_difference_max": 0.15
+    },
+    "root_agreed_before_any_policy_performance_data": true,
+    "scope": "Numerical/common representation migration only. No change to ratio PI law or unified task objective, no target oracle, no stability-corridor policy."
+  }
+}
